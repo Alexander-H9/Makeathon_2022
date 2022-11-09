@@ -9,6 +9,7 @@ import numpy as np
 from io_link import Inductor, Socket
 from stepper import Stepper, SEQ8
 from KNN import prepData, X, getKNearestNeighbors
+from trainKNN import Model
 
 def plotData(x, y):
     plt.scatter(x, y, color="black")
@@ -22,11 +23,13 @@ if __name__ == "__main__":
     Sensor = Inductor()
     Motor = Stepper(SEQ8, 0.002)
 
-    thread_motor = threading.Thread(target=Motor.run, args=(185, -1))
+    model_small = Model("small.json","small")
+    model_large = Model("large.json","large")
+
+    thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
     thread_motor.start()
 
     data = []
-    t_end = time.time() + 4
     while thread_motor.is_alive():
         val = Sensor.getValue()
         if val < 1000:
@@ -35,16 +38,30 @@ if __name__ == "__main__":
     plotData([y for y in range(len(data))], [x for x in data])
 
     x = prepData(data)
-    k = 2
-    idx_knn = getKNearestNeighbors(x, X, k)
-    print("The k Nearest Neighbors of x =", x ,"are the following vectors:")
-    for i in range(k):
-        idx=idx_knn[i]
-        print("The", i+1, "th nearest neighbor is: X[",idx,"] =",X[idx],"with distance", np.linalg.norm(X[idx]-x))
+    print(x)
+
+    # kNN_small.update_small_model("10", x)
+    # kNN_large.update_large_model("10", x)
     
-    PwrSocket = Socket()
-    if idx_knn[0] == 0:
-        PwrSocket.setPort(True)
+    np_model_small = np.array(list(model_small.model.values()))
+    np_model_large = np.array(list(model_large.model.values()))
+
+    print(np_model_small, np_model_large)
+    if model_small.model_type == "small": np_model_small = np.delete(np_model_small, 4, 1) # remove the amount column which is only required to train the small model
+    if model_large.model_type == "small": np_model_large = np.delete(np_model_large, 4, 1) # remove the amount column which is only required to train the small model
+
+    idx_knn_small = getKNearestNeighbors(x, np_model_small, 1)
+    idx_knn_large = getKNearestNeighbors(x, np_model_large, 1)
+
+    print(f'Small model index: {idx_knn_small}')
+    print(f'Large model index: {idx_knn_large} \n')
+
+    print(f'Small model prediction: {model_small.keyMapping[idx_knn_small[0]]}')
+    print(f'Large model prediction: {model_large.keyMapping[idx_knn_large[0]]}')
+    
+    # PwrSocket = Socket()
+    # if idx_knn[0] == 0:
+    #     PwrSocket.setPort(True)
 
     
     

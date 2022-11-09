@@ -63,32 +63,33 @@ class Model:
         self.write_model()
         
 
-# model_small = Model("model_1.json", model_type="small")
-# model_large = Model("model_2.json", model_type="large")
+if __name__ == "__main__":
+    # model_small = Model("model_1.json", model_type="small")
+    # model_large = Model("model_2.json", model_type="large")
 
-model_small = Model("model_small.json", model_type="small")
-model_large = Model("model_large.json", model_type="large")
+    model_small = Model("model_small.json", model_type="small")
+    model_large = Model("model_large.json", model_type="large")
 
-model_small.update_small_model("50", (202, 155, 645, 170))
-model_large.update_large_model("100", (202, 155, 645, 170))
+    model_small.update_small_model("50", (202, 155, 645, 170))
+    model_large.update_large_model("100", (202, 155, 645, 170))
 
 
 
-# messwerte = [210, 838, 985, 340, 864, 130, 719, 255, 782, 992, 732, 497, 811, 623, 172, 700, 283, 951, 504, 770, 516, 51, 900, 806, 197, 485, 1000, 987, 573, 6, 758, 653, 386, 423, 398, 649, 34, 184, 519, 901, 952, 447, 319, 199, 714, 302, 235, 161, 767, 958]
+    # messwerte = [210, 838, 985, 340, 864, 130, 719, 255, 782, 992, 732, 497, 811, 623, 172, 700, 283, 951, 504, 770, 516, 51, 900, 806, 197, 485, 1000, 987, 573, 6, 758, 653, 386, 423, 398, 649, 34, 184, 519, 901, 952, 447, 319, 199, 714, 302, 235, 161, 767, 958]
 
-# x = prepData(messwerte)
+    # x = prepData(messwerte)
 
-# np_model_small = np.array(list(model_small.model.values()))
-# np_model_large = np.array(list(model_large.model.values()))
+    # np_model_small = np.array(list(model_small.model.values()))
+    # np_model_large = np.array(list(model_large.model.values()))
 
-# if model_small.model_type == "small": np_model_small = np.delete(np_model_small, 4, 1) # remove the amount column which is only required to train the small model
-# if model_large.model_type == "small": np_model_large = np.delete(np_model_large, 4, 1) # remove the amount column which is only required to train the small model
+    # if model_small.model_type == "small": np_model_small = np.delete(np_model_small, 4, 1) # remove the amount column which is only required to train the small model
+    # if model_large.model_type == "small": np_model_large = np.delete(np_model_large, 4, 1) # remove the amount column which is only required to train the small model
 
-# idx_knn_small = getKNearestNeighbors(x, np_model_small, 1)
-# idx_knn_large = getKNearestNeighbors(x, np_model_large, 1)
+    # idx_knn_small = getKNearestNeighbors(x, np_model_small, 1)
+    # idx_knn_large = getKNearestNeighbors(x, np_model_large, 1)
 
-# print(f'Small model index: {idx_knn_small}')
-# print(f'Large model index: {idx_knn_large} \n')
+    # print(f'Small model index: {idx_knn_small}')
+    # print(f'Large model index: {idx_knn_large} \n')
 
-# print(f'Small model prediction: {model_small.keyMapping[idx_knn_small[0]]}')
-# print(f'Large model prediction: {model_large.keyMapping[idx_knn_large[0]]}')
+    # print(f'Small model prediction: {model_small.keyMapping[idx_knn_small[0]]}')
+    # print(f'Large model prediction: {model_large.keyMapping[idx_knn_large[0]]}')

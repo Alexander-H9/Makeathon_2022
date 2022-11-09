@@ -23,7 +23,7 @@ def prepData(data):
     minR = min(data[endSecondThird:length])
     maxM = max(data[endFirstThird:endSecondThird])
 
-    return np.array([minL, minR, maxM, length])
+    return np.array([minL, minR, maxM, length]).tolist()
 
 def getKNearestNeighbors(x,X,k=1):
     """

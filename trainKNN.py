@@ -30,6 +30,11 @@ class Model:
         with open(f'models/{self.name}', 'w') as j:
             j.write(json.dumps(self.model, indent=4))
 
+    
+    def update_model(self, coin: str, wight_update):
+        if self.model_type == "small": self.update_small_model(coin, wight_update) 
+        if self.model_type == "large": self.update_large_model(coin, wight_update) 
+
 
     def update_small_model(self, coin: str, wight_update):
         """Update one coin wight for the small model"""

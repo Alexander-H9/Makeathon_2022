@@ -62,6 +62,3 @@ if __name__ == "__main__":
     # PwrSocket = Socket()
     # if idx_knn[0] == 0:
     #     PwrSocket.setPort(True)
-
-    
-    

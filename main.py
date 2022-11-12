@@ -11,7 +11,7 @@ from stepper import Stepper, SEQ8
 from KNN import prepData, X, getKNearestNeighbors
 from trainKNN import Model
 
-def plotData(x, y):
+def plotDataCurve(x, y):
     plt.scatter(x, y, color="black")
     plt.title("Coin measurement")
     plt.xlabel("Count")
@@ -35,7 +35,7 @@ if __name__ == "__main__":
         if val < 1000:
             data.append(val)
     
-    plotData([y for y in range(len(data))], [x for x in data])
+    plotDataCurve([y for y in range(len(data))], [x for x in data])
 
     x = prepData(data)
     print(x)

@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import sqlite3
+import sys
 
 class Dao:
     """
@@ -14,7 +12,7 @@ class Dao:
             self.create_table()
         except Exception as exception:
             print(exception)
-            exit(-1)
+            sys.exit(-1)
 
     def create_table(self):
         """

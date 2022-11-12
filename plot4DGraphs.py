@@ -1,11 +1,6 @@
-from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
-from trainKNN import Model
-
-"""
-creating 4D data plots for presentation
-"""
+from train_knn import Model
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')

@@ -14,18 +14,21 @@ X = np.array([[202, 155, 645, 170],     # 2 €
                 [608, 634, 619, 400],   # 1 Cent
             ])
 
-def prepData(data):
+def prep_data(data):
+    """
+    Prepare Data
+    """
     length = len(data)
-    endFirstThird = length//3
-    endSecondThird = int(length//1.5)
+    end_first_third = length//3
+    end_second_third = int(length//1.5)
 
-    minL = min(data[0:endFirstThird])
-    minR = min(data[endSecondThird:length])
-    maxM = max(data[endFirstThird:endSecondThird])
+    min_left = min(data[0:end_first_third])
+    min_right = min(data[end_second_third:length])
+    max_m = max(data[end_first_third:end_second_third])
 
-    return np.array([minL, minR, maxM, length]).tolist()
+    return np.array([min_left, min_right, max_m, length]).tolist()
 
-def getKNearestNeighbors(x,X,k=1):
+def get_k_nearest_neighbors(data_vector,data_martrix,k=1):
     """
     compute the k nearest neighbors for a query vector x given a data matrix X
     :param x: the query vector x
@@ -33,6 +36,5 @@ def getKNearestNeighbors(x,X,k=1):
     :param k: number of nearest-neighbors to be returned
     :return: return list of k line indixes referring to the k nearest neighbors of x in X
     """
-    d=[np.linalg.norm(X[i]-x) for i in range(len(X))]                   
-    d = np.argsort(d)
-    return d[:k]
+    distances = [np.linalg.norm(data_martrix[i]-data_vector) for i in range(len(data_martrix))]
+    return np.argsort(distances)[:k]

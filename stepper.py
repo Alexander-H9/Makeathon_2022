@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# import libraries
 import time
 import RPi.GPIO as GPIO
 
@@ -21,6 +17,9 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 class Stepper():
+    """
+    Class representing a Stepper Motor
+    """
     def __init__(self, seq, t):
         self.sequence = seq
         self.timeout = t
@@ -32,11 +31,14 @@ class Stepper():
             GPIO.output(pin, False)
 
     def run(self, deg, direc):
+        """
+        Run the stepper Motor
+        """
         cntr = 0
         steps = len(self.sequence)
-        nSteps = int(deg*(4096/360))
+        n_steps = int(deg*(4096/360))
 
-        for i in range(nSteps):
+        for i in range(n_steps):
             for j in range(4):
                 pin = self.pins[j]
                 if self.sequence[cntr][j] != 0:
@@ -44,9 +46,9 @@ class Stepper():
                 else:
                     GPIO.output(pin, False)
             cntr += direc
-            if (cntr == steps):
+            if cntr == steps:
                 cntr = 0
-            if (cntr < 0):
+            if cntr < 0:
                 cntr = steps-1
             time.sleep(self.timeout)
 

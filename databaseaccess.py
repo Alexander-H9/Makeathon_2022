@@ -18,7 +18,8 @@ class Dao:
 
     def create_table(self):
         """
-        This Method will create the Database Tables if they dont already exist
+        Create the Database Tables if they dont already exist
+        :return:
         """
         sql = """CREATE TABLE IF NOT EXISTS coins (
             id integer PRIMARY KEY,
@@ -59,7 +60,7 @@ class Dao:
         """
         Query all rows in the coins table
         :param conn: the Connection object
-        :return:
+        :return data: 
         """
         try:
             sql = """SELECT * FROM coins"""
@@ -72,7 +73,6 @@ class Dao:
     def delete_coin(self, name):
         """
         Delete a coin by coin name
-        :param conn:  Connection to the SQLite database
         :param name: name of the coin
         :return:
         """
@@ -92,6 +92,6 @@ if __name__ == "__main__":
     database.create_coin(coin_2euro)
 
     database.update_coin(("1 Euro", 203, 155, 645, 170, "2 Euro"))
-    database.select_all_coins()
+    print(database.select_all_coins())
 
         # database.delete_coin("2 Euro")

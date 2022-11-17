@@ -1,0 +1,80 @@
+/* Allgemein */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #343437;
+    color: white;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.limegreen {
+    color: #32cd32;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.bg-yellow {
+    background-color: #ffff00;
+}
+
+.bg-orange {
+    background-color: #ffa500;
+}
+
+.bg-red {
+    background-color: #ff0000;
+}
+
+.bg-purple {
+    background-color: #800080;
+}
+
+.bg-blue {
+    background-color: #0000ff;
+}
+
+.bg-green {
+    background-color: #008000;
+}
+
+.bg-black {
+    background-color: #000000;
+}
+
+.color-circle.active {
+    transform: scale(1.2);
+}
+
+/* Navbar */
+
+.nav-link:active,
+.nav-link:hover {
+    color: #32cd32 !important;
+}
+
+/* Sidebar */
+
+.button {
+    background-color: #212529;
+    border-radius: 0.5em;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+    font-weight: 350;
+    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+  }
+  
+.opt-btn {
+    width: 9em;
+    border: 2px solid #32cd32;
+}
+
+.opt-btn:hover {
+    box-shadow: 0 0 40px 40px #32cd32 inset;
+}

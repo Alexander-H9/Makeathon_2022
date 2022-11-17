@@ -1,6 +1,6 @@
 import json
 import numpy as np
-from KNN import prepData, getKNearestNeighbors
+from KNN import prep_data, get_k_nearest_neighbors
 
 class Model:
     """
@@ -107,7 +107,7 @@ if __name__ == "__main__":
                 758, 653, 386, 423, 398, 649, 34, 184, 519, 901,
                 952, 447, 319, 199, 714, 302, 235, 161, 767, 958]
 
-    x = prepData(messwerte)
+    x = prep_data(messwerte)
 
     np_model_small = np.array(list(model_small.model.values()))
     np_model_large = np.array(list(model_large.model.values()))
@@ -120,8 +120,8 @@ if __name__ == "__main__":
     if model_large.model_type == "small":
         np_model_large = np.delete(np_model_large, 4, 1)
 
-    idx_knn_small = getKNearestNeighbors(x, np_model_small, 1)
-    idx_knn_large = getKNearestNeighbors(x, np_model_large, 1)
+    idx_knn_small = get_k_nearest_neighbors(x, np_model_small, 1)
+    idx_knn_large = get_k_nearest_neighbors(x, np_model_large, 1)
 
     print(f'Small model index: {idx_knn_small}')
     print(f'Large model index: {idx_knn_large} \n')

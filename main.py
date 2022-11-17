@@ -1,11 +1,25 @@
 import threading
+from flask import Flask, request, jsonify, render_template
 import matplotlib.pyplot as plt
 import numpy as np
 
 from io_link import Inductor
-from stepper import Stepper, SEQ8
-from KNN import prepData, getKNearestNeighbors
+#from stepper import Stepper, SEQ8
+from KNN import prep_data, get_k_nearest_neighbors
 from train_knn import Model
+
+app = Flask(__name__)
+
+## ----- GET ----- ##
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/admin")
+def images():
+    return render_template("admin.html")
+
 
 def plot_data_curve(x_vector, y_vector):
     """
@@ -20,7 +34,7 @@ def plot_data_curve(x_vector, y_vector):
 
 if __name__ == "__main__":
     Sensor = Inductor()
-    Motor = Stepper(SEQ8, 0.002)
+    """Motor = Stepper(SEQ8, 0.002)
 
     model_small = Model("small.json","small")
     model_large = Model("large.json","large")
@@ -36,7 +50,7 @@ if __name__ == "__main__":
 
     plot_data_curve(list(range(len(data))), data)
 
-    x = prepData(data)
+    x = prep_data(data)
     print(x)
 
     # kNN_small.update_small_model("10", x)
@@ -54,15 +68,17 @@ if __name__ == "__main__":
     if model_large.model_type == "small":
         np_model_large = np.delete(np_model_large, 4, 1)
 
-    idx_knn_small = getKNearestNeighbors(x, np_model_small, 1)
-    idx_knn_large = getKNearestNeighbors(x, np_model_large, 1)
+    idx_knn_small = get_k_nearest_neighbors(x, np_model_small, 1)
+    idx_knn_large = get_k_nearest_neighbors(x, np_model_large, 1)
 
     print(f'Small model index: {idx_knn_small}')
     print(f'Large model index: {idx_knn_large} \n')
 
     print(f'Small model prediction: {model_small.keyMapping[idx_knn_small[0]]}')
     print(f'Large model prediction: {model_large.keyMapping[idx_knn_large[0]]}')
-
+"""
     # PwrSocket = Socket()
     # if idx_knn[0] == 0:
     #     PwrSocket.setPort(True)
+
+    app.run(debug=True, host="0.0.0.0")

@@ -17,6 +17,7 @@ class Model:
         if model_from_db:
             database = Dao()
             self.model = database.load_all_training_data()
+            self.create_small_model_from_training_data()
 
         else:
             try:
@@ -42,7 +43,6 @@ class Model:
             small_model[entry].append(len(self.model[entry]))
 
         self.model_type = "small"
-        return small_model
 
 
     def write_model(self):

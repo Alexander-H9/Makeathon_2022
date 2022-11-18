@@ -48,20 +48,24 @@
                         <li class="mb-2 mt-4">
                             <span class="fs-5 fw-bold">ADD COIN</span>
                         </li>
-                        <li>
-                            <input class="my-2" type="number" id="value-inpt" placeholder="VALUE" data-bs-toggle="tooltip" data-bs-placement="right" title="Value" size="4">
+                        <li class="my-2">
+                            <input type="number" id="value-inpt" placeholder="VALUE" data-bs-toggle="tooltip" data-bs-placement="right" title="Value">
                         </li>
-                        <li>
-                            <input class="my-2" type="text" id="currency-inpt" placeholder="CURRENCY" data-bs-toggle="tooltip" data-bs-placement="right" title="Currency">
+                        <li class="my-2">
+                            <input type="text" id="currency-inpt" placeholder="CURRENCY" data-bs-toggle="tooltip" data-bs-placement="right" title="Currency">
                         </li>
-                        <li>
-                            <button class="button opt-btn mt-2 mb-4" id="add-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Lerne eine neue Münze"><strong>ADD</strong></button>
+                        <li class="mt-2 mb-4">
+                            <button class="button opt-btn" id="add-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Train a new Coin"><strong>ADD</strong></button>
                         </li>
                         <li class="mb-2 mt-4">
                             <span class="fs-5 fw-bold">REMOVE COIN</span>
                         </li>
-                        <li>
-                            <button class="button opt-btn my-2" id="remove-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Lösche die Münze"><strong>REMOVE</strong></button>
+                        <li class="my-2">
+                            <select id="select-value" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Coin Value"></select>
+                            <select id="select-currency" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Coin Currency"></select>
+                        </li>
+                        <li class="my-2">
+                            <button class="button opt-btn" id="remove-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Remove the Coin from Database"><strong>REMOVE</strong></button>
                         </li>
                     </ul>
                 </div>

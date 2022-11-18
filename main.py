@@ -17,8 +17,16 @@ def index():
     return render_template("index.html")
 
 @app.route("/admin")
-def images():
+def admin():
     return render_template("admin.html")
+
+@app.route("/coins/load")
+def coin_load():
+    data = {
+            "values": ["2,00", "1,00", "0,50", "0,20", "0,10", "0,05", "0,02", "0,01"],
+            "currencies": ["Euro","Kronen","Dollar","Pounds"]
+    }
+    return jsonify(data)
 
 ## ----- POST ----- ##
 

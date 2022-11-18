@@ -57,13 +57,13 @@ if __name__ == '__main__':
     # stepper.run(180, -1)
 
     import threading
-    from io_link import Capacitor
+    from io_link import Inductor
     from plot_graphs import plot_2D
 
     thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
     thread_motor.start()
 
-    sensor = Capacitor()
+    sensor = Inductor()
 
     data = []
     while thread_motor.is_alive():

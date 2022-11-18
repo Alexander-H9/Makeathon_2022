@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     data = []
     while thread_motor.is_alive():
-        val = Capacitor.getValue()
+        val = Capacitor.get_value()
         if val < 1000:
             data.append(val)
 

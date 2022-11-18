@@ -20,6 +20,20 @@ def index():
 def images():
     return render_template("admin.html")
 
+## ----- POST ----- ##
+
+@app.route("/coin/add", methods=["POST"])
+def coin_add():
+    value = request.args.get('value', type = int)
+    currency = request.args.get('currency', type = str)
+    try:
+        print(value,currency)
+        return {}
+    except Exception as exception:
+        print(exception)
+        return exception,400
+
+
 
 def plot_data_curve(x_vector, y_vector):
     """

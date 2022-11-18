@@ -40,9 +40,11 @@ class Model:
         small_model: dict = {}
         for entry in self.model:
             small_model[entry] = [sum(x) for x in zip(*self.model[entry])]
+            small_model[entry] = [int(x / len(self.model[entry])) for x in small_model[entry]]
             small_model[entry].append(len(self.model[entry]))
 
         self.model_type = "small"
+        self.model = small_model
 
 
     def write_model(self):

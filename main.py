@@ -45,6 +45,15 @@ def coin_add():
         print(exception)
         return exception,400
 
+@app.route("/train", methods=["POST"])
+def train():
+    try:
+        print("ICH TRAINIERE DAS MODEL")
+        return {}
+    except Exception as exception:
+        print(exception)
+        return exception,400
+
 
 
 

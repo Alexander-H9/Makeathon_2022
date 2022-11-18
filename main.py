@@ -39,7 +39,7 @@ def coin_add():
     currency = request.args.get('currency', type = str)
     try:
         data = measurement()
-        database.save_training_data_to_database(value,currency,data)
+        database.save_training_data(value,currency,data)
         return {}
     except Exception as exception:
         print(exception)
@@ -51,7 +51,7 @@ def coin_add():
 # BENUTZ MICH ALEX :)
 """
 database = Dao()
-dictionary = database.load_all_training_data_from_database()
+dictionary = database.load_all_training_data()
 """
 
 

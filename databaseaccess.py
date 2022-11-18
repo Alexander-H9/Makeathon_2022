@@ -33,7 +33,7 @@ class Dao:
             modelvalues blob NOT NULL)"""
         self.cursor.execute(sql)
 
-    def save_training_data_to_database(self, value, currency, data):
+    def save_training_data(self, value, currency, data):
         """
         This Method will save the trainingdata to the Database
         """
@@ -41,10 +41,11 @@ class Dao:
             sql = "INSERT INTO trainingdata VALUES (NULL,?,?,?)"
             self.cursor.execute(sql, (value,currency,json.dumps(data)))
             self.conn.commit()
+            self.get_model_labels()
         except Exception as exception:
             print(exception)
 
-    def load_all_training_data_from_database(self):
+    def load_all_training_data(self):
         """
         This Method will return all trainingdata as a dictionary"""
         try:
@@ -61,4 +62,19 @@ class Dao:
         except Exception as exception:
             print(exception)
             return None
-            
+
+    def get_model_labels(self):
+        """
+        This Method will return all labels"""
+        try:
+            sql = "SELECT value, currency FROM trainingdata"
+            data = self.cursor.execute(sql).fetchall()
+            labels = []
+            for value,currency in data:
+                label = str(value) + " " + currency
+                if label not in labels:
+                    labels.append(label)
+            return labels
+        except Exception as exception:
+            print(exception)
+            return None

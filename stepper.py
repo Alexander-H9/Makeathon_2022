@@ -9,6 +9,10 @@ SEQ8 = [[1,0,0,0],
         [0,0,1,1],
         [0,0,0,1],
         [1,0,0,1]]
+SEQ4 = [[1,0,0,0],
+        [0,1,0,0], 
+        [0,0,1,0], 
+        [0,0,0,1]]
 TIMEOUT = 0.002
 
 # use BCM GPIO pin references
@@ -36,7 +40,7 @@ class Stepper():
         """
         cntr = 0
         steps = len(self.sequence)
-        n_steps = int(deg*(4096/360))
+        n_steps = int(deg*(4096/360)) if steps == 8 else int(deg*(2048/360))
 
         for i in range(n_steps):
             for j in range(4):
@@ -53,7 +57,7 @@ class Stepper():
             time.sleep(self.timeout)
 
 if __name__ == '__main__':
-    Motor = Stepper(SEQ8, TIMEOUT)
+    Motor = Stepper(SEQ4, TIMEOUT)
     # stepper.run(180, -1)
 
     import threading

@@ -63,9 +63,11 @@ if __name__ == '__main__':
     thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
     thread_motor.start()
 
+    sensor = Capacitor()
+
     data = []
     while thread_motor.is_alive():
-        val = Capacitor.get_value()
+        val = sensor.get_value()
         if val < 1000:
             data.append(val)
 

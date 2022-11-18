@@ -53,5 +53,20 @@ class Stepper():
             time.sleep(self.timeout)
 
 if __name__ == '__main__':
-    stepper = Stepper(SEQ8, TIMEOUT)
-    stepper.run(180, -1)
+    Motor = Stepper(SEQ8, TIMEOUT)
+    # stepper.run(180, -1)
+
+    import threading
+    from io_link import Capacitor
+    from plot_graphs import plot_2D
+
+    thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
+    thread_motor.start()
+
+    data = []
+    while thread_motor.is_alive():
+        val = Capacitor.getValue()
+        if val < 1000:
+            data.append(val)
+
+    plot_2D(list(range(len(data))), data)

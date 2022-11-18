@@ -54,10 +54,6 @@ database = Dao()
 dictionary = database.load_all_training_data()
 """
 
-
-
-
-
 # IMPLEMENTIER MICH ANDI :)
 def measurement():
     """
@@ -65,18 +61,6 @@ def measurement():
     Returns Array of all measurements.
     """
     return [666,111,111,111,65]
-
-
-def plot_data_curve(x_vector, y_vector):
-    """
-    Plotting the data Curve
-    """
-    plt.scatter(x_vector, y_vector, color="black")
-    plt.title("Coin measurement")
-    plt.xlabel("Count")
-    plt.ylabel("Value")
-    #plt.show()
-    plt.savefig("/home/pi/IFM/Makeathon2022-main/plot.png")
 
 if __name__ == "__main__":
     Sensor = Inductor()

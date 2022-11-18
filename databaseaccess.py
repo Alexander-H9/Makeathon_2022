@@ -63,6 +63,7 @@ class Dao:
             print(exception)
             return None
 
+    # Better use models table for this function
     def get_model_labels(self):
         """
         This Method will return all labels"""

@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from train_knn import Model
+from KNN_model import Model
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')

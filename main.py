@@ -7,7 +7,7 @@ import numpy as np
 from io_link import Inductor
 #from stepper import Stepper, SEQ8
 from KNN import prep_data, get_k_nearest_neighbors
-from train_knn import Model
+from KNN_model import Model
 
 app = Flask(__name__)
 
@@ -25,7 +25,7 @@ def admin():
 def coin_load():
     data = {
             "values": ["2,00", "1,00", "0,50", "0,20", "0,10", "0,05", "0,02", "0,01"],
-            "currencies": ["Euro","Kronen","Dollar","Pounds"]
+            "currencies": ["Euro","Kronen","Dollar","Pounds","Alexcoin"]
     }
     return jsonify(data)
 

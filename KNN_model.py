@@ -1,28 +1,48 @@
 import json
 import numpy as np
 from KNN import prep_data, get_k_nearest_neighbors
+from databaseaccess import Dao
+
 
 class Model:
     """
     Class representing a Model
     """
-    def __init__(self, name, model_type):
+    def __init__(self, name, model_type, model_from_db=False):
         self.name: str = name
         self.model_type: str = model_type
         self.key_mapping = {0: "2€", 1: "1€", 2: "0.5€", 3: "0.20€",
                             4: "0.10", 5: "0.05€", 6: "0.02€", 7: "0.01€"}
 
-        try:
-            with open(f'models/{self.name}', 'r', encoding="utf-8") as j:
-                self.model: dict = json.loads(j.read())
+        if model_from_db:
+            database = Dao()
+            self.model = database.load_all_training_data()
 
-        except FileNotFoundError:
-            print("Creating a new model ", self.name)
-            with open(f'models/{self.name}', 'w', encoding="utf-8") as j:
-                pass
+        else:
+            try:
+                with open(f'models/{self.name}', 'r', encoding="utf-8") as j:
+                    self.model: dict = json.loads(j.read())
 
-            self.model: dict = {}
-            self.write_model()
+            except FileNotFoundError:
+                print("Creating a new model ", self.name)
+                with open(f'models/{self.name}', 'w', encoding="utf-8") as j:
+                    pass
+
+                self.model: dict = {}
+                self.write_model()
+
+
+    def create_small_model_from_training_data(self):
+        """
+        Convert the large modell to the small
+        """
+        small_model: dict = {}
+        for entry in self.model:
+            small_model[entry] = [sum(x) for x in zip(*self.model[entry])]
+            small_model[entry].append(len(self.model[entry]))
+
+        self.model_type = "small"
+        return small_model
 
 
     def write_model(self):
@@ -32,6 +52,7 @@ class Model:
 
         with open(f'models/{self.name}', 'w', encoding="utf-8") as j:
             j.write(json.dumps(self.model, indent=4))
+
 
     def update_model(self, coin: str, wight_update):
         """
@@ -97,6 +118,8 @@ if __name__ == "__main__":
     # current models
     model_small = Model("small.json", model_type="small")
     model_large = Model("large.json", model_type="large")
+
+    # model = model_large.create_small_model_from_training_data()
 
     # model_small.update_small_model("200", (202, 155, 645, 170))
     # model_large.update_large_model("200", (202, 155, 645, 170))

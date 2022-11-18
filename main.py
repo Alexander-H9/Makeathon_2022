@@ -1,5 +1,6 @@
 import threading
 from flask import Flask, request, jsonify, render_template
+from databaseaccess import Dao
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -32,15 +33,38 @@ def coin_load():
 
 @app.route("/coin/add", methods=["POST"])
 def coin_add():
+    database = Dao("database.sqlite")
+
     value = request.args.get('value', type = int)
     currency = request.args.get('currency', type = str)
     try:
-        print(value,currency)
+        data = measurement()
+        database.save_training_data_to_database(value,currency,data)
         return {}
     except Exception as exception:
         print(exception)
         return exception,400
 
+
+
+
+# BENUTZ MICH ALEX :)
+"""
+database = Dao()
+dictionary = database.load_all_training_data_from_database()
+"""
+
+
+
+
+
+# IMPLEMENTIER MICH ANDI :)
+def measurement():
+    """
+    Starts stepper Motor and measurement.
+    Returns Array of all measurements.
+    """
+    return [666,111,111,111,65]
 
 
 def plot_data_curve(x_vector, y_vector):

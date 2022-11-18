@@ -1,5 +1,6 @@
 import sqlite3
 import sys
+import json
 
 class Dao:
     """
@@ -17,79 +18,47 @@ class Dao:
     def create_table(self):
         """
         Create the Database Tables if they dont already exist
-        :return:
         """
-        sql = """CREATE TABLE IF NOT EXISTS coins (
-            id integer PRIMARY KEY,
-            name text NOT NULL,
-            minL integer NOT NULL,
-            minR integer NOT NULL,
-            maxM integer NOT NULL,
-            length integer NOT NULL)"""
+        sql = """CREATE TABLE IF NOT EXISTS trainingdata (
+            id integer PRIMARY KEY AUTOINCREMENT,
+            value integer NOT NULL,
+            currency text NOT NULL,
+            measurement blob NOT NULL)"""
         self.cursor.execute(sql)
 
-    def create_coin(self, coin):
+        sql = """CREATE TABLE IF NOT EXISTS models (
+            id integer PRIMARY KEY AUTOINCREMENT,
+            value integer NOT NULL,
+            currency text NOT NULL,
+            modelvalues blob NOT NULL)"""
+        self.cursor.execute(sql)
+
+    def save_training_data_to_database(self, value, currency, data):
         """
-        Create a new coin
-        :param coin:
-        :return:
+        This Method will save the trainingdata to the Database
         """
         try:
-            sql = """INSERT INTO coins(name,minL,minR,maxM,length) VALUES(?,?,?,?,?)"""
-            self.cursor.execute(sql, coin)
+            sql = "INSERT INTO trainingdata VALUES (NULL,?,?,?)"
+            self.cursor.execute(sql, (value,currency,json.dumps(data)))
             self.conn.commit()
         except Exception as exception:
-            print("Error on creating coin: ", exception)
+            print(exception)
 
-    def update_coin(self, coin):
+    def load_all_training_data_from_database(self):
         """
-        update coin
-        :param coin:
-        :return:
-        """
+        This Method will return all trainingdata as a dictionary"""
         try:
-            sql = """UPDATE coins SET name = ?, minL = ?, minR = ?, maxM = ?, length = ? WHERE name = ?"""
-            self.cursor.execute(sql, coin)
-            self.conn.commit()
-        except Exception as exception:
-            print("Error on updating coin: ", exception)
-
-    def select_all_coins(self):
-        """
-        Query all rows in the coins table
-        :param conn: the Connection object
-        :return data: 
-        """
-        try:
-            sql = """SELECT * FROM coins"""
+            sql = "SELECT * FROM trainingdata"
             data = self.cursor.execute(sql).fetchall()
-            return (data)
+            trainingdata = dict()
+            for _, value, currency, measurement in data:
+                key = str(value)+ " " + currency
+                if key not in trainingdata:
+                    trainingdata[key] = [json.loads(measurement)]
+                else:
+                    trainingdata[key].append(json.loads(measurement))
+            return trainingdata
         except Exception as exception:
-            print("Error on selecting *: ", exception)
+            print(exception)
             return None
-
-    def delete_coin(self, name):
-        """
-        Delete a coin by coin name
-        :param name: name of the coin
-        :return:
-        """
-        try:
-            sql = """DELETE FROM coins WHERE name=?"""
-            self.cursor.execute(sql, (name,))
-            self.conn.commit()
-        except Exception as exception:
-            print("Error on deleting coin: ", exception)
-
-
-if __name__ == "__main__":
-
-    database = Dao("database.sqlite")
-
-    coin_2euro = ('2 Euro', 202, 155, 645, 170)
-    database.create_coin(coin_2euro)
-
-    database.update_coin(("1 Euro", 203, 155, 645, 170, "2 Euro"))
-    print(database.select_all_coins())
-
-        # database.delete_coin("2 Euro")
+            

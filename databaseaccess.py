@@ -33,6 +33,8 @@ class Dao:
             modelvalues blob NOT NULL)"""
         self.cursor.execute(sql)
 
+# --------------- TRAININGDATA TABLE --------------- #
+
     def save_training_data(self, value, currency, data):
         """
         This Method will save the trainingdata to the Database
@@ -59,6 +61,36 @@ class Dao:
                 else:
                     trainingdata[key].append(json.loads(measurement))
             return trainingdata
+        except Exception as exception:
+            print(exception)
+            return None
+
+# --------------- MODELS TABLE --------------- #
+
+    # IMPLEMENT OVERRIDE ON NEW TRAINING
+    def save_model(self, value, currency, data):
+        """
+        This Method will save the trained model to the Database
+        """
+        try:
+            sql = "INSERT INTO models VALUES (NULL,?,?,?)"
+            self.cursor.execute(sql, (value,currency,json.dumps(data)))
+            self.conn.commit()
+            self.get_model_labels()
+        except Exception as exception:
+            print(exception)
+
+    def load_all_models(self):
+        """
+        This Method will return all trained models as a dictionary"""
+        try:
+            sql = "SELECT * FROM models"
+            data = self.cursor.execute(sql).fetchall()
+            models = dict()
+            for _, value, currency, model in data:
+                key = str(value)+ " " + currency
+                models[key] = json.loads(model)
+            return models
         except Exception as exception:
             print(exception)
             return None

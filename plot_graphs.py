@@ -1,19 +1,39 @@
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 from KNN_model import Model
 
+style = {
+        "text.color": "ffffff", # text color of title
+        "axes.facecolor": "1a1a1a", # grid background
+        "axes.edgecolor": "ffffff", # edge of graph
+        "axes.labelcolor": "ffffff", # axes label
+        # axis ticks
+        "xtick.color": "ffffff",
+        "ytick.color": "ffffff",
+        "grid.color": "4c4c4c", # grid line
+        # outer background color
+        "figure.facecolor": "1a1a1a",
+        "figure.edgecolor": "1a1a1a",
+        "savefig.facecolor": "1a1a1a",
+        "savefig.edgecolor": "1a1a1a"
+        }
 
-
-def plot_2D(x,y):
-    plt.scatter(x, y, color="black")
-    plt.title("Coin measurement")
+def plot_2D(x,y,name="Coin measurement"):
+    plt.rcParams.update(style)
+    plt.scatter(x, y)
+    plt.title(name)
     plt.xlabel("Count")
     plt.ylabel("Value")
     plt.show()
 
 def plot_4D(x,y,z,c):
+    plt.rcParams.update(style)
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
+    ax.w_xaxis.set_pane_color((0,0,0,0))
+    ax.w_yaxis.set_pane_color((0,0,0,0))
+    ax.w_zaxis.set_pane_color((0,0,0,0))
 
     img = ax.scatter(x, y, z, c=c, cmap=plt.viridis())
     fig.colorbar(img)

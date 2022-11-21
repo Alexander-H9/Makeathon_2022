@@ -57,8 +57,8 @@ class Stepper():
             time.sleep(self.timeout)
 
 if __name__ == '__main__':
-    Motor = Stepper(SEQ4, TIMEOUT)
-    # stepper.run(180, -1)
+    Motor = Stepper(SEQ8, TIMEOUT)
+    # Motor.run(180, -1)
 
     import threading
     from io_link import Inductor
@@ -75,4 +75,4 @@ if __name__ == '__main__':
         if val < 1000:
             data.append(val)
 
-    plot_2D(list(range(len(data))), data)
+    plot_2D(list(range(len(data))), data, "Coin")

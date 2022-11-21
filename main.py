@@ -72,8 +72,8 @@ def measurement():
     return [666,111,111,111,65]
 
 if __name__ == "__main__":
-    Sensor = Inductor()
-    """Motor = Stepper(SEQ8, 0.002)
+    """Sensor = Inductor()
+    Motor = Stepper(SEQ8, 0.002)
 
     model_small = Model("small.json","small")
     model_large = Model("large.json","large")

@@ -54,27 +54,30 @@
                         <li class="my-2">
                             <input type="text" id="currency-inpt" placeholder="CURRENCY" data-bs-toggle="tooltip" data-bs-placement="right" title="Currency">
                         </li>
-                        <li class="mt-2 mb-4">
+                        <li class="mt-2 mb-3">
                             <button class="button opt-btn" id="add-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Train a new Coin"><strong>ADD</strong></button>
                         </li>
-                        <li class="mb-2 mt-4">
+                        <li class="mb-2 mt-2">
                             <span class="fs-5 fw-bold">TRAIN AI MODEL</span>
                         </li>
                         <li class="my-2">
-                            <button class="button opt-btn" id="train-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Remove the Coin from Database"><strong>TRAIN</strong></button>
+                            <button class="button opt-btn" id="train-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Train the AI Model for all Coins"><strong>TRAIN</strong></button>
                         </li>
-                        <li class="mb-2 mt-4">
+                        <li class="mb-2 mt-5">
                             <span class="fs-5 fw-bold">SELECT COIN</span>
                         </li>
                         <li class="my-2">
+                            <select id="select-currency" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Currency"></select>
                             <select id="select-value" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Coin Value"></select>
-                            <select id="select-currency" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Coin Currency"></select>
                         </li>
                         <li class="my-2">
-                            <button class="button opt-btn" id="select-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Remove the Coin from Database"><strong>SELECT</strong></button>
+                            <button class="button opt-btn" id="delete-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Delete the Coin from Database"><strong>DELETE</strong></button>
+                        </li>
+                        <li class="mb-2 mt-5">
+                            <span class="fs-5 fw-bold">EVALUATE COIN</span>
                         </li>
                         <li class="my-2">
-                            <button class="button opt-btn" id="remove-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Remove the Coin from Database"><strong>REMOVE</strong></button>
+                            <button class="button opt-btn" id="evaluate-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Scan Coin to test"><strong>EVALUATE</strong></button>
                         </li>
                     </ul>
                 </div>
@@ -86,11 +89,11 @@
                 <div class="board pt-lg-3">
                     <div class="text-center">
                         <h3>Database</h3>
-                        <img src="/static/plot.png" class="img-fluid" alt="...">
+                        <img id="plot-img-1" class="img-fluid" alt="...">
                         <p>Amount of coins saved:</p>
                         <p>Amount of currencies:</p>
                         <h3>Coin properties</h3>
-                        <img src="/static/plot.png" class="img-fluid" alt="...">
+                        <img id="plot-img-2" class="img-fluid" alt="...">
                     </div>
                 </div>
             </div>

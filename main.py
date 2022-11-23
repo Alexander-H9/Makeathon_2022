@@ -21,13 +21,17 @@ def index():
 def admin():
     return render_template("admin.html")
 
-@app.route("/coins/load")
-def coin_load():
-    data = {
-            "values": ["2,00", "1,00", "0,50", "0,20", "0,10", "0,05", "0,02", "0,01"],
-            "currencies": ["Euro","Kronen","Dollar","Pounds","Alexcoin"]
-    }
-    return jsonify(data)
+@app.route("/coins/load/currencies")
+def coins_load_currencies():
+    database = Dao("database.sqlite")
+    return jsonify(database.get_currencies())
+
+@app.route("/coins/load/values")
+def coins_load_values():
+    database = Dao("database.sqlite")
+
+    currency = request.args.get('currency', type = str)
+    return jsonify(database.get_coinvalues(currency))
 
 ## ----- POST ----- ##
 
@@ -35,7 +39,7 @@ def coin_load():
 def coin_add():
     database = Dao("database.sqlite")
 
-    value = request.args.get('value', type = int)
+    value = request.args.get('value', type = float)
     currency = request.args.get('currency', type = str)
     try:
         data = measurement()
@@ -47,21 +51,40 @@ def coin_add():
 
 @app.route("/train", methods=["POST"])
 def train():
+    database = Dao("database.sqlite")
     try:
+
+        #   ----- DUMMYCODE -----   #
         print("ICH TRAINIERE DAS MODEL")
+        trainingdata = database.load_all_training_data()
+        model = dict()
+        for key in trainingdata:
+            model[key] = trainingdata[key][0]
+        database.save_model(model)
+        #   ----- DUMMYCODE ENDE -----   #
+
+
         return {}
     except Exception as exception:
         print(exception)
         return exception,400
 
+## ----- DELETE ----- ##
 
+@app.route("/delete", methods=["DELETE"])
+def delete():
+    database = Dao("database.sqlite")
 
+    value = request.args.get('value', type = float)
+    currency = request.args.get('currency', type = str)
+    try:
+        database.delete_coin_model(value,currency)
+        database.delete_coin_trainingdata(value,currency)
+        return {}
+    except Exception as exception:
+        print(exception)
+        return exception,400
 
-# BENUTZ MICH ALEX :)
-"""
-database = Dao()
-dictionary = database.load_all_training_data()
-"""
 
 # IMPLEMENTIER MICH ANDI :)
 def measurement():
@@ -69,7 +92,7 @@ def measurement():
     Starts stepper Motor and measurement.
     Returns Array of all measurements.
     """
-    return [666,111,111,111,65]
+    return [666,111,111,111,65,1000]   # Ungekürzte Messdaten
 
 if __name__ == "__main__":
     """Sensor = Inductor()

@@ -13,10 +13,10 @@ style = {
         "ytick.color": "ffffff",
         "grid.color": "4c4c4c", # grid line
         # outer background color
-        "figure.facecolor": "1a1a1a",
-        "figure.edgecolor": "1a1a1a",
-        "savefig.facecolor": "1a1a1a",
-        "savefig.edgecolor": "1a1a1a"
+        "figure.facecolor": "333333",
+        "figure.edgecolor": "333333",
+        "savefig.facecolor": "333333",
+        "savefig.edgecolor": "333333"
         }
 
 def plot_2D(x,y,name="Coin measurement"):

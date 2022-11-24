@@ -79,6 +79,9 @@
                         <li class="my-2">
                             <button class="button opt-btn" id="evaluate-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="Scan Coin to test"><strong>EVALUATE</strong></button>
                         </li>
+                        <li class="mb-2">
+                            <span class="fw-bold" id="evaluate-span">None</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -86,15 +89,29 @@
             <!-- Sidebar END -->
             <!-- Main -->
             <div class="col py-3">
-                <div class="board pt-lg-3">
-                    <div class="text-center">
-                        <h3>Database</h3>
-                        <img id="plot-img-1" class="img-fluid" alt="...">
-                        <p>Amount of coins saved:</p>
-                        <p>Amount of currencies:</p>
-                        <h3>Coin properties</h3>
-                        <img id="plot-img-2" class="img-fluid" alt="...">
-                    </div>
+                <div class="board pt-lg-3 text-center">
+                    <ul class="nav flex-column align-items-center">
+                        <li class="my-4">
+                            <h3>Database</h3>
+                            <img id="plot-img-1" class="img-fluid" alt="..." width="500">
+                        </li>
+                        <li class="mt-4 mb-2">
+                            <span class="fw-bold">Total amount of coins:</span>
+                        </li>
+                        <li>
+                            <span class="fw-bold" id="total-coin-count">0</span>
+                        </li>
+                        <li class="mt-4 mb-2">
+                            <span class="fw-bold">Total amount of currencies:</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="fw-bold" id="total-currency-count">0</span>
+                        </li>
+                        <li class="my-4">
+                            <h3>Coin properties</h3>
+                            <img id="plot-img-2" class="img-fluid" alt="..." width="500">
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!-- Main END -->

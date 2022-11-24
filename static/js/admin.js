@@ -5,6 +5,8 @@ const train_btn = document.querySelector("#train-btn");
 const select_currency = document.querySelector("#select-currency");
 const select_value = document.querySelector("#select-value");
 const delete_btn = document.querySelector("#delete-btn");
+const evaluate_btn = document.querySelector("#evaluate-btn");
+const evaluate_span = document.querySelector("#evaluate-span");
 const plot_img_1 = document.querySelector("#plot-img-1");
 const plot_img_2 = document.querySelector("#plot-img-2");
 

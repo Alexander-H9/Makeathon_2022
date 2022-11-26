@@ -85,8 +85,6 @@ def delete():
         print(exception)
         return exception,400
 
-
-# IMPLEMENTIER MICH ANDI :)
 def measurement():
     """
     Starts stepper Motor and measurement.

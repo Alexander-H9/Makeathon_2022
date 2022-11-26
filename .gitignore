@@ -54,12 +54,12 @@ coverage.xml
 # Flask stuff:
 *.log
 local_settings.py
-db.sqlite
-db.sqlite3
-database.sqlite
-database.sqlite3
 instance/
 .webassets-cache
+#db.sqlite
+#db.sqlite3
+#database.sqlite
+#database.sqlite3
 
 # Jupyter Notebook
 .ipynb_checkpoints

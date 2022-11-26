@@ -100,7 +100,7 @@ def measurement():
 
     data = []
     while thread_motor.is_alive():
-        val = Sensor.getValue()
+        val = Sensor.get_value()
         if val < 1000:
             data.append(val)
 

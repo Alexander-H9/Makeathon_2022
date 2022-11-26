@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from io_link import Inductor
-#from stepper import Stepper, SEQ8
+from stepper import Stepper, SEQ8
 from KNN import prep_data, get_k_nearest_neighbors
 from KNN_model import Model
 
@@ -92,14 +92,8 @@ def measurement():
     Starts stepper Motor and measurement.
     Returns Array of all measurements.
     """
-    return [666,111,111,111,65,1000]   # Ungekürzte Messdaten
-
-if __name__ == "__main__":
-    """Sensor = Inductor()
+    Sensor = Inductor()
     Motor = Stepper(SEQ8, 0.002)
-
-    model_small = Model("small.json","small")
-    model_large = Model("large.json","large")
 
     thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
     thread_motor.start()
@@ -110,37 +104,7 @@ if __name__ == "__main__":
         if val < 1000:
             data.append(val)
 
-    plot_data_curve(list(range(len(data))), data)
+    return data   # Ungekürzte Messdaten
 
-    x = prep_data(data)
-    print(x)
-
-    # kNN_small.update_small_model("10", x)
-    # kNN_large.update_large_model("10", x)
-
-    np_model_small = np.array(list(model_small.model.values()))
-    np_model_large = np.array(list(model_large.model.values()))
-
-    print(np_model_small, np_model_large)
-
-    # remove the amount column which is only required to train the small model
-    if model_small.model_type == "small":
-        np_model_small = np.delete(np_model_small, 4, 1)
-    # remove the amount column which is only required to train the small model
-    if model_large.model_type == "small":
-        np_model_large = np.delete(np_model_large, 4, 1)
-
-    idx_knn_small = get_k_nearest_neighbors(x, np_model_small, 1)
-    idx_knn_large = get_k_nearest_neighbors(x, np_model_large, 1)
-
-    print(f'Small model index: {idx_knn_small}')
-    print(f'Large model index: {idx_knn_large} \n')
-
-    print(f'Small model prediction: {model_small.keyMapping[idx_knn_small[0]]}')
-    print(f'Large model prediction: {model_large.keyMapping[idx_knn_large[0]]}')
-"""
-    # PwrSocket = Socket()
-    # if idx_knn[0] == 0:
-    #     PwrSocket.setPort(True)
-
+if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

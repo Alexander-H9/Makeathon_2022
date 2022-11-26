@@ -58,21 +58,4 @@ class Stepper():
 
 if __name__ == '__main__':
     Motor = Stepper(SEQ8, TIMEOUT)
-    # Motor.run(180, -1)
-
-    import threading
-    from io_link import Inductor
-    from plot_graphs import plot_2D
-
-    thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
-    thread_motor.start()
-
-    sensor = Inductor()
-
-    data = []
-    while thread_motor.is_alive():
-        val = sensor.get_value()
-        if val < 1000:
-            data.append(val)
-
-    plot_2D(list(range(len(data))), data, "Coin")
+    Motor.run(180, -1)

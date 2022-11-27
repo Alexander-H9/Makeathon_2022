@@ -7,7 +7,7 @@ const select_value = document.querySelector("#select-value");
 const delete_btn = document.querySelector("#delete-btn");
 const evaluate_btn = document.querySelector("#evaluate-btn");
 const evaluate_span = document.querySelector("#evaluate-span");
-const plot_img_1 = document.querySelector("#plot-img-1");
+const plot_img_2d = document.querySelector("#plot-img-2d");
 const plot_img_2 = document.querySelector("#plot-img-2");
 
 add_btn.addEventListener("click", async () => await sendCoinToServer());
@@ -26,7 +26,9 @@ async function sendCoinToServer() {
         let response = await fetch("/coin/add?value="+value+"&currency="+currency, {
             method: "POST"
         });
-        if (response.status != 200) {
+        if (response.status == 200) {
+            plot_img_2d.src = "./static/images/"+value+" "+currency+".png"
+        } else {
             console.log("failed to send Coin to Server");
         }
     }
@@ -96,6 +98,6 @@ function displayCoinValuesToDropdowns(values) {
 
 document.addEventListener("DOMContentLoaded", async function() {
     await loadCurrenciesFromServer();
-    plot_img_1.src = "./static/images/0,01 Euro.png"
-    plot_img_2.src = "./static/images/4D.png"
+    plot_img_2d.src = "./static/images/None_2D.png"
+    plot_img_2.src = "./static/images/None_4D.png"
 });

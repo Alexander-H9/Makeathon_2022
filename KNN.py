@@ -25,19 +25,16 @@ def prep_data_list(data):
     """
     res = []
     for coin in data:
-        for measurement in data:
-            print(measurement)
-            length = len(measurement)
-            end_first_third = length//3
-            end_second_third = int(length//1.5)
-            min_left = min(measurement[0:end_first_third])
-            min_right = min(measurement[end_second_third:length])
-            max_m = max(measurement[end_first_third:end_second_third])
+        length = len(coin)
+        end_first_third = length//3
+        end_second_third = int(length//1.5)
+        min_left = min(coin[0:end_first_third])
+        min_right = min(coin[end_second_third:length])
+        max_m = max(coin[end_first_third:end_second_third])
 
-            res.append([min_left, min_right, max_m, length])
+        res.append([min_left, min_right, max_m, length])
 
     print(res)
-    exit()
     return res
 
 

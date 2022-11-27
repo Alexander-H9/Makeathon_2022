@@ -58,8 +58,7 @@ def train():
     try:
 
         model = Model("large", True)
-        database.save_model(model)
-        
+        database.save_model(model.model)
         return {}
     except Exception as exception:
         print(exception)

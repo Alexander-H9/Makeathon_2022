@@ -1,7 +1,7 @@
 import json
 import numpy as np
 from KNN import prep_data, get_k_nearest_neighbors
-from databaseaccess import Dao
+#from databaseaccess import Dao
 
 
 class Model:
@@ -15,9 +15,10 @@ class Model:
                             4: "0.10", 5: "0.05€", 6: "0.02€", 7: "0.01€"}
 
         if model_from_db:
-            database = Dao("database.sqlite")
-            self.model = database.load_all_training_data()
-            self.create_small_model_from_training_data()
+            # database = Dao("database.sqlite")
+            # self.model = database.load_all_training_data()
+            # self.create_small_model_from_training_data()
+            pass
 
         else:
             try:
@@ -38,7 +39,14 @@ class Model:
         Convert the large modell to the small
         """
         small_model: dict = {}
+
         for entry in self.model:
+            print("Model before preperation:")
+            print(self.model)
+            self.model[entry] = prep_data( self.model[entry])
+            print("Model after preperation:")
+            print(self.model)
+
             small_model[entry] = [sum(x) for x in zip(*self.model[entry])]
             small_model[entry] = [int(x / len(self.model[entry])) for x in small_model[entry]]
             small_model[entry].append(len(self.model[entry]))
@@ -121,7 +129,8 @@ if __name__ == "__main__":
     model_small = Model(model_type="small", name="small.json")
     model_large = Model(model_type="large", name="large.json")
 
-    # model = model_large.create_small_model_from_training_data()
+    model = model_large.create_small_model_from_training_data()
+    exit()
 
     # model_small.update_small_model("200", (202, 155, 645, 170))
     # model_large.update_large_model("200", (202, 155, 645, 170))

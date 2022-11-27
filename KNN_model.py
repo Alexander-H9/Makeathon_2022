@@ -8,7 +8,7 @@ class Model:
     """
     Class representing a Model
     """
-    def __init__(self, name, model_type, model_from_db=False):
+    def __init__(self, model_type, model_from_db=False, name="default"):
         self.name: str = name
         self.model_type: str = model_type
         self.key_mapping = {0: "2€", 1: "1€", 2: "0.5€", 3: "0.20€",
@@ -110,16 +110,16 @@ class Model:
 
 if __name__ == "__main__":
     # old working models
-    # model_small = Model("model_1.json", model_type="small")
-    # model_large = Model("model_2.json", model_type="large")
+    # model_small = Model("model_type="small", name="model_1.json")
+    # model_large = Model("model_2.json", name=model_type="large")
 
     # test models
-    # model_small = Model("model_small.json", model_type="small")
-    # model_large = Model("model_large.json", model_type="large")
+    # model_small = Model(model_type="small", name="model_small.json")
+    # model_large = Model(model_type="large", name="model_large.json")
 
     # current models
-    model_small = Model("small.json", model_type="small")
-    model_large = Model("large.json", model_type="large")
+    model_small = Model(model_type="small", name="small.json")
+    model_large = Model(model_type="large", name="large.json")
 
     # model = model_large.create_small_model_from_training_data()
 

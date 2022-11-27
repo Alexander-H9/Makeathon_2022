@@ -57,16 +57,9 @@ def train():
     database = Dao("database.sqlite")
     try:
 
-        #   ----- DUMMYCODE -----   #
-        print("ICH TRAINIERE DAS MODEL")
-        trainingdata = database.load_all_training_data()
-        model = dict()
-        for key in trainingdata:
-            model[key] = trainingdata[key][0]
+        model = Model("large", True)
         database.save_model(model)
-        #   ----- DUMMYCODE ENDE -----   #
-
-
+        
         return {}
     except Exception as exception:
         print(exception)

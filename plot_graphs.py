@@ -45,7 +45,7 @@ def plot_4d(x,y,z,c):
     plt.show()
 
 if __name__ == "__main__":
-    model_large = Model("large.json","large")
+    model_large = Model("large", name="large.json")
     np_model_large = np.array(list(model_large.model.values()))
     x,y,z,c = ([] for _ in range(4))
     for coin in np_model_large:

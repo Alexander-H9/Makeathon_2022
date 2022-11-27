@@ -6,7 +6,7 @@ import numpy as np
 
 def prep_data(data):
     """
-    Prepare Data
+    Prepare Data. Use this function for the prediction of the measurement
     """
     length = len(data)
     end_first_third = length//3
@@ -17,6 +17,27 @@ def prep_data(data):
     max_m = max(data[end_first_third:end_second_third])
 
     return np.array([min_left, min_right, max_m, length]).tolist()
+
+
+def prep_data_list(data):
+    """
+    Prepare the raw data from the database. Use this function to create a model from the database data
+    """
+    erg = []
+    for l in data:
+        current_list = []
+        length = len(l)
+        end_first_third = length//3
+        end_second_third = int(length//1.5)
+
+        min_left = min(data[0:end_first_third])
+        min_right = min(data[end_second_third:length])
+        max_m = max(data[end_first_third:end_second_third])
+
+        erg.append(np.array([min_left, min_right, max_m, length]).tolist())
+
+    return erg
+
 
 def get_k_nearest_neighbors(data_vector,data_martrix,k=1):
     """

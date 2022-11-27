@@ -13,10 +13,22 @@ const plot_img_2 = document.querySelector("#plot-img-2");
 add_btn.addEventListener("click", async () => await sendCoinToServer());
 train_btn.addEventListener("click", async () => await trainAIModel());
 select_currency.addEventListener("click", currencySelected);
+select_value.addEventListener("click", valueSelected);
 delete_btn.addEventListener("click", async () => await deleteCoinFromServer());
+plot_img_2d.addEventListener("error", error2DImage);
 
 function currencySelected() {
     loadCoinValuesFromServer(select_currency.value)
+}
+
+function error2DImage() {
+    plot_img_2d.src = "./static/images/None_2D.png"
+}
+
+function valueSelected() {
+    var value = select_value.value;
+    var currency = select_currency.value;
+    plot_img_2d.src = "./static/images/"+value+" "+currency+".png"
 }
 
 async function sendCoinToServer() {

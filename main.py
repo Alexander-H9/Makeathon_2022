@@ -46,7 +46,7 @@ def coin_add():
     try:
         data = measurement()
         database.save_training_data(value,currency,data)
-        plot_2d(list(range(len(data))),data,"./static/images/"+combine_key(value, currency)+".png")
+        plot_2d(list(range(len(data))),data,combine_key(value, currency),"./static/images","png")
         return {}
     except Exception as exception:
         print(exception)
@@ -59,6 +59,7 @@ def train():
 
         model = Model("large", True)
         database.save_model(model.model)
+
         return {}
     except Exception as exception:
         print(exception)

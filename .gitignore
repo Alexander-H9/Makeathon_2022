@@ -56,10 +56,10 @@ coverage.xml
 local_settings.py
 instance/
 .webassets-cache
-#db.sqlite
-#db.sqlite3
-#database.sqlite
-#database.sqlite3
+db.sqlite
+db.sqlite3
+database.sqlite
+database.sqlite3
 
 # Jupyter Notebook
 .ipynb_checkpoints

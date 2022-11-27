@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from io_link import Inductor
-from stepper import Stepper, SEQ8
+#from stepper import Stepper, SEQ8
 from KNN import prep_data, get_k_nearest_neighbors
 from KNN_model import Model
 from plot_graphs import plot_2d
@@ -86,17 +86,17 @@ def measurement():
     Starts stepper Motor and measurement.
     Returns Array of all measurements.
     """
-    Sensor = Inductor()
-    Motor = Stepper(SEQ8, 0.002)
+#    Sensor = Inductor()
+#    Motor = Stepper(SEQ8, 0.002)
 
-    thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
-    thread_motor.start()
+#    thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
+#    thread_motor.start()
 
     data = []
-    while thread_motor.is_alive():
-        val = Sensor.get_value()
-        if val < 1000:
-            data.append(val)
+#    while thread_motor.is_alive():
+#        val = Sensor.get_value()
+#        if val < 1000:
+#            data.append(val)
 
     return data   # Ungekürzte Messdaten
 

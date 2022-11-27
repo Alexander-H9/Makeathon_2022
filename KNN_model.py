@@ -15,7 +15,7 @@ class Model:
                             4: "0.10", 5: "0.05€", 6: "0.02€", 7: "0.01€"}
 
         if model_from_db:
-            database = Dao()
+            database = Dao("database.sqlite")
             self.model = database.load_all_training_data()
             self.create_small_model_from_training_data()
 

@@ -1,6 +1,9 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 from KNN_model import Model
 
 style = {
@@ -19,15 +22,17 @@ style = {
         "savefig.edgecolor": "333333"
         }
 
-def plot_2D(x,y,name="Coin measurement"):
+def plot_2d(x,y,name="Coin measurement"):
+    """This function will plot 2D coordinates"""
     plt.rcParams.update(style)
     plt.scatter(x, y)
     plt.title(name)
     plt.xlabel("Count")
     plt.ylabel("Value")
-    plt.show()
+    plt.savefig(name,dpi='figure')
 
-def plot_4D(x,y,z,c):
+def plot_4d(x,y,z,c):
+    """This function will plot 4D graphs"""
     plt.rcParams.update(style)
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -49,4 +54,4 @@ if __name__ == "__main__":
             y.append(entry[1])
             z.append(entry[2])
             c.append(entry[3])
-    plot_4D(x,y,z,c)
+    plot_4d(x,y,z,c)

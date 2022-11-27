@@ -1,6 +1,7 @@
+"""This is main"""
 import threading
 from flask import Flask, request, jsonify, render_template
-from databaseaccess import Dao
+from databaseaccess import Dao, combine_key, split_key
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -8,6 +9,7 @@ from io_link import Inductor
 from stepper import Stepper, SEQ8
 from KNN import prep_data, get_k_nearest_neighbors
 from KNN_model import Model
+from plot_graphs import plot_2d
 
 app = Flask(__name__)
 
@@ -44,6 +46,7 @@ def coin_add():
     try:
         data = measurement()
         database.save_training_data(value,currency,data)
+        plot_2d(list(range(len(data))),data,"./static/images/"+combine_key(value, currency)+".png")
         return {}
     except Exception as exception:
         print(exception)

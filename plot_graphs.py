@@ -31,7 +31,7 @@ def plot_2d(x,y,name,path,type):
     plt.ylabel("Value")
     plt.savefig(path+"/"+name+"."+type,dpi='figure')
 
-def plot_4d(x,y,z,c):
+def plot_4d(x,y,z,c,name,path,type):
     """This function will plot 4D graphs"""
     plt.rcParams.update(style)
     fig = plt.figure()
@@ -42,16 +42,16 @@ def plot_4d(x,y,z,c):
 
     img = ax.scatter(x, y, z, c=c, cmap=plt.viridis())
     fig.colorbar(img)
-    plt.show()
+    plt.savefig(path+"/"+name+"."+type,dpi='figure')
 
 if __name__ == "__main__":
     model_large = Model("large", name="large.json")
     np_model_large = np.array(list(model_large.model.values()))
     x,y,z,c = ([] for _ in range(4))
-    for coin in np_model_large:
+    """for coin in np_model_large:
         for entry in coin:
             x.append(entry[0])
             y.append(entry[1])
             z.append(entry[2])
-            c.append(entry[3])
-    plot_4d(x,y,z,c)
+            c.append(entry[3])"""
+    plot_4d(x,y,z,c,"test","./static/images","png")

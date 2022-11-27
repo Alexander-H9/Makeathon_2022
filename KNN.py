@@ -23,24 +23,22 @@ def prep_data_list(data):
     """
     Prepare the raw data from the database. Use this function to create a model from the database data
     """
-    erg = []
-    for l in data:
-        print("l:")
-        print(l)
-        print("data:")
-        print(data)
-        exit()
-        length = len(l)
-        end_first_third = length//3
-        end_second_third = int(length//1.5)
+    res = []
+    for coin in data:
+        for measurement in data:
+            print(measurement)
+            length = len(measurement)
+            end_first_third = length//3
+            end_second_third = int(length//1.5)
+            min_left = min(measurement[0:end_first_third])
+            min_right = min(measurement[end_second_third:length])
+            max_m = max(measurement[end_first_third:end_second_third])
 
-        min_left = min(data[0:end_first_third])
-        min_right = min(data[end_second_third:length])
-        max_m = max(data[end_first_third:end_second_third])
+            res.append([min_left, min_right, max_m, length])
 
-        erg.append(np.array([min_left, min_right, max_m, length]).tolist())
-
-    return erg
+    print(res)
+    exit()
+    return res
 
 
 def get_k_nearest_neighbors(data_vector,data_martrix,k=1):

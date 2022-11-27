@@ -22,14 +22,14 @@ style = {
         "savefig.edgecolor": "333333"
         }
 
-def plot_2d(x,y,name="Coin measurement"):
+def plot_2d(x,y,name,path,type):
     """This function will plot 2D coordinates"""
     plt.rcParams.update(style)
     plt.scatter(x, y)
     plt.title(name)
     plt.xlabel("Count")
     plt.ylabel("Value")
-    plt.savefig(name,dpi='figure')
+    plt.savefig(path+"/"+name+"."+type,dpi='figure')
 
 def plot_4d(x,y,z,c):
     """This function will plot 4D graphs"""

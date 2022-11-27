@@ -25,7 +25,11 @@ def prep_data_list(data):
     """
     erg = []
     for l in data:
-        current_list = []
+        print("l:")
+        print(l)
+        print("data:")
+        print(data)
+        exit()
         length = len(l)
         end_first_third = length//3
         end_second_third = int(length//1.5)

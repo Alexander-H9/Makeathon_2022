@@ -161,7 +161,10 @@ class Dao:
 
 def combine_key(value,currency):
     """Combine value and currency"""
-    return str(value)+ " " + currency
+    value = str(value)
+    if value.endswith(".0"):
+        value=value[:-2]
+    return value + " " + currency
 
 def split_key(key):
     """split value and currency"""

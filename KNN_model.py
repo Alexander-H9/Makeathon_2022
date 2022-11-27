@@ -1,7 +1,7 @@
 import json
 import numpy as np
-from KNN import prep_data, get_k_nearest_neighbors, prep_data_list
-#from databaseaccess import Dao
+from KNN import prep_data, get_k_nearest_neighbors
+from databaseaccess import Dao
 
 
 class Model:
@@ -15,10 +15,9 @@ class Model:
                             4: "0.10", 5: "0.05€", 6: "0.02€", 7: "0.01€"}
 
         if model_from_db:
-            # database = Dao("database.sqlite")
-            # self.model = database.load_all_training_data()
-            # self.create_small_model_from_training_data()
-            pass
+            database = Dao("database.sqlite")
+            self.model = database.load_all_training_data()
+            self.create_small_model_from_training_data()
 
         else:
             try:
@@ -43,7 +42,7 @@ class Model:
         for entry in self.model:
             print("Model before preperation:")
             print(self.model)
-            self.model[entry] = prep_data( self.model[entry])
+            self.model[entry] = prep_data(self.model[entry])
             print("Model after preperation:")
             print(self.model)
 

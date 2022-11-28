@@ -28,7 +28,7 @@ class Stepper():
 
         if sequence=="SEQ8":
             self.sequence = self.SEQ8
-        else if sequence=="SEQ4":
+        elif sequence=="SEQ4":
             self.sequence=self.SEQ4
         self.timeout = timeout
 

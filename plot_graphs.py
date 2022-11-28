@@ -25,6 +25,7 @@ def plot_2d(x,y,name,path,filetype):
     plt.xlabel("Count")
     plt.ylabel("Value")
     plt.savefig(path+"/"+name+"."+filetype,dpi='figure')
+    plt.close()
 
 def plot_4d(model,name,path,filetype):
     """This function will plot 4D graphs"""
@@ -46,3 +47,4 @@ def plot_4d(model,name,path,filetype):
     img = ax.scatter(x_list, y_list, z_list, c=c_list, cmap=plt.spring())
     fig.colorbar(img)
     plt.savefig(path+"/"+name+"."+filetype,dpi='figure')
+    plt.close()

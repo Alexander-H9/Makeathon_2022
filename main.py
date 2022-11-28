@@ -46,11 +46,10 @@ def load_stats():
 @app.route("/scan")
 def scan():
     """Scanning a coin"""
-    database = Dao("database.sqlite")
+    print("Scanne Münze")
     dummy_measurement = [123, 231, 424, 420]
     model = Model("large", True)
-    knn_idx = model.predict(dummy_measurement)
-    return database.get_model_labels()[knn_idx[0]]
+    return model.predict(dummy_measurement)
 
 ## ----- POST ----- ##
 

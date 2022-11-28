@@ -11,12 +11,12 @@ class Model:
     def __init__(self, model_type, model_from_db=False, name="default"):
         self.name: str = name
         self.model_type: str = model_type
+        self.database = Dao("database.sqlite")
         self.key_mapping = {0: "2€", 1: "1€", 2: "0.5€", 3: "0.20€",
                             4: "0.10", 5: "0.05€", 6: "0.02€", 7: "0.01€"}
 
         if model_from_db:
-            database = Dao("database.sqlite")
-            self.model = database.load_all_training_data()
+            self.model = self.database.load_all_training_data()
             self.create_small_model_from_training_data()
         else:
             try:
@@ -124,7 +124,11 @@ class Model:
 
         idx_knn = get_k_nearest_neighbors(measurement, np_matrix, 1)
 
-        return idx_knn
+        if len(self.database.get_model_labels()) < idx_knn[0]:
+            print("ERROR Max, da läuft irgend was nicht ganz rund in der Datenbank")
+            exit()
+
+        return self.database.get_model_labels()[idx_knn[0]]
 
 
 if __name__ == "__main__":

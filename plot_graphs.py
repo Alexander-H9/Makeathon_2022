@@ -45,13 +45,12 @@ def plot_4d(x,y,z,c,name,path,type):
     plt.savefig(path+"/"+name+"."+type,dpi='figure')
 
 if __name__ == "__main__":
-    model_large = Model("large", name="large.json")
-    np_model_large = np.array(list(model_large.model.values()))
+    model = {'1 Euro': [270, 219, 458, 141, 6], '0.5 Euro': [716, 664, 746, 131, 1], '2 Euro': [287, 198, 726, 165, 4]}
     x,y,z,c = ([] for _ in range(4))
-    """for coin in np_model_large:
-        for entry in coin:
-            x.append(entry[0])
-            y.append(entry[1])
-            z.append(entry[2])
-            c.append(entry[3])"""
+    for coin in model:
+        print(model[coin])
+        x.append(model[coin][0])
+        y.append(model[coin][1])
+        z.append(model[coin][2])
+        c.append(model[coin][3])
     plot_4d(x,y,z,c,"test","./static/images","png")

@@ -46,7 +46,6 @@ def load_stats():
 @app.route("/scan")
 def scan():
     """Scanning a coin"""
-    print("Scanne Münze")
     database = Dao("database.sqlite")
     dummy_measurement = [123, 231, 424, 420]
     model = Model("large", True)

@@ -3,7 +3,7 @@
 from flask import Flask, request, jsonify, render_template
 
 from databaseaccess import Dao, combine_key
-from plot_graphs import plot_2d
+from plot_graphs import plot_2d,plot_4d
 from KNN_model import Model
 
 #from io_link import Inductor
@@ -77,7 +77,7 @@ def train():
     try:
         model = Model("large", True)
         database.save_model(model.model)
-
+        plot_4d(model.model,"4D Models","./static/images","png")
         return {}
     except Exception as exception:
         print(exception)

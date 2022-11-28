@@ -76,6 +76,7 @@ async function trainAIModel() {
         train_span.textContent = "Error";
     }
     await loadCurrenciesFromServer();
+    await loadStatsFromServer();
 }
 
 async function deleteCoinFromServer() {
@@ -95,6 +96,7 @@ async function deleteCoinFromServer() {
         delete_span.textContent = "Error";
     }
     await loadCurrenciesFromServer();
+    await loadStatsFromServer();
 }
 
 async function scanCoin() {

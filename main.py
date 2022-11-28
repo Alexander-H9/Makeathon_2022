@@ -23,19 +23,25 @@ def admin():
     """Loading admin page"""
     return render_template("admin.html")
 
-@app.route("/coins/load/currencies")
-def coins_load_currencies():
+@app.route("/load/currencies")
+def load_currencies():
     """Loading all trained currencies from database"""
     database = Dao("database.sqlite")
     return jsonify(database.get_currencies())
 
-@app.route("/coins/load/values")
-def coins_load_values():
+@app.route("/load/values")
+def load_values():
     """Loading all trained values for given currency from database"""
     database = Dao("database.sqlite")
 
     currency = request.args.get('currency', type = str)
     return jsonify(database.get_coinvalues(currency))
+
+@app.route("/load/stats")
+def load_stats():
+    """Loading amound of coins and currencies"""
+    database = Dao("database.sqlite")
+    return jsonify(database.get_stats())
 
 @app.route("/scan")
 def scan():

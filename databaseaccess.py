@@ -147,6 +147,22 @@ class Dao:
             print(exception)
             return None
 
+    def get_stats(self):
+        """
+        This Method returns amount of coins and currencies"""
+        try:
+            sql = "SELECT value, currency FROM models"
+            data = self.cursor.execute(sql).fetchall()
+            valuecount = 0
+            currencies = []
+            for _,currency in data:
+                valuecount+=1
+                currencies.append(currency)
+            return valuecount, len(set(currencies))
+        except Exception as exception:
+            print(exception)
+            return None
+
     def delete_coin_model(self,value, currency):
         """
         This Method will delete the trained model for the given coin

@@ -13,7 +13,7 @@ const evaluate_span = document.querySelector("#evaluate-span");
 const plot_img_2d = document.querySelector("#plot-img-2d");
 const total_coin_span = document.querySelector("#total-coin-span");
 const total_currency_span = document.querySelector("#total-currency-span");
-const plot_img_2 = document.querySelector("#plot-img-2");
+const plot_img_4d = document.querySelector("#plot-img-4d");
 
 add_btn.addEventListener("click", async () => await sendCoinToServer());
 train_btn.addEventListener("click", async () => await trainAIModel());
@@ -68,6 +68,7 @@ async function trainAIModel() {
         method: "POST"
     });
     if (response.status == 200) {
+        plot_img_4d.src = "./static/images/4D Models.png"
         train_span.style.color = "#32cd32"
         train_span.textContent = "Success";
     } else {
@@ -168,5 +169,5 @@ document.addEventListener("DOMContentLoaded", async function() {
     await loadCurrenciesFromServer();
     await loadStatsFromServer();
     plot_img_2d.src = "./static/images/None_2D.png"
-    plot_img_2.src = "./static/images/None_4D.png"
+    plot_img_4d.src = "./static/images/None_4D.png"
 });

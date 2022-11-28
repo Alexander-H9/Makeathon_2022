@@ -120,7 +120,7 @@ class Model:
 
         # remove the amount column which is only required to train the small model
         if self.model_type == "small":
-            np_matrix = np.delete(np_model_small, 4, 1)
+            np_matrix = np.delete(np_matrix, 4, 1)
 
         idx_knn = get_k_nearest_neighbors(measurement, np_matrix, 1)
 
@@ -128,6 +128,13 @@ class Model:
 
 
 if __name__ == "__main__":
+
+    messwerte = [210, 838, 985, 340, 864, 130, 719, 255, 782, 992,
+                732, 497, 811, 623, 172, 700, 283, 951, 504, 770,
+                516, 51, 900, 806, 197, 485, 1000, 987, 573, 6,
+                758, 653, 386, 423, 398, 649, 34, 184, 519, 901,
+                952, 447, 319, 199, 714, 302, 235, 161, 767, 958]
+
     # old working models
     # model_small = Model("model_type="small", name="model_1.json")
     # model_large = Model("model_2.json", name=model_type="large")
@@ -141,15 +148,13 @@ if __name__ == "__main__":
     model_large = Model(model_type="large", name="large.json")
 
     model_large.create_small_model_from_training_data()
+    print(model_large.predict(messwerte))
+    exit()
 
     # model_small.update_small_model("200", (202, 155, 645, 170))
     # model_large.update_large_model("200", (202, 155, 645, 170))
 
-    messwerte = [210, 838, 985, 340, 864, 130, 719, 255, 782, 992,
-                732, 497, 811, 623, 172, 700, 283, 951, 504, 770,
-                516, 51, 900, 806, 197, 485, 1000, 987, 573, 6,
-                758, 653, 386, 423, 398, 649, 34, 184, 519, 901,
-                952, 447, 319, 199, 714, 302, 235, 161, 767, 958]
+    
 
     x = prep_data(messwerte)
 

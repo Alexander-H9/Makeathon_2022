@@ -34,7 +34,6 @@ def prep_data_list(data):
 
         res.append([min_left, min_right, max_m, length])
 
-    print(res)
     return res
 
 

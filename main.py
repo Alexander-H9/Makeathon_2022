@@ -47,7 +47,11 @@ def load_stats():
 def scan():
     """Scanning a coin"""
     print("Scanne Münze")
-    return "2 Euro"
+    database = Dao("database.sqlite")
+    dummy_measurement = [123, 231, 424, 420]
+    model = Model("large", True)
+    knn_idx = model.predict(dummy_measurement)
+    return database.get_model_labels()[knn_idx[0]]
 
 ## ----- POST ----- ##
 

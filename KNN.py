@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import numpy as np
-
 
 def prep_data(data):
     """
@@ -21,7 +17,7 @@ def prep_data(data):
 
 def prep_data_list(data):
     """
-    Prepare the raw data from the database. Use this function to create a model from the database data
+    Prepare the raw data from the database. Use this function to create a model
     """
     res = []
     for coin in data:

@@ -108,7 +108,7 @@ async function scanCoin() {
         res = await response.text();
         evaluate_span.textContent = res;
     } else {
-        train_span.style.color = "#ff0000"
+        evaluate_span.style.color = "#ff0000"
         evaluate_span.textContent = "Error"
         console.log("failed to load currencies from server");
     }

@@ -47,9 +47,8 @@ def load_stats():
 def scan():
     """Scanning a coin"""
     print("Scanne Münze")
-    dummy_measurement = [123, 231, 424, 420]
     model = Model("large", True)
-    return model.predict(dummy_measurement)
+    return model.predict(measurement())
 
 ## ----- POST ----- ##
 

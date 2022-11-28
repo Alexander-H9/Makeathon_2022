@@ -3,7 +3,6 @@ import numpy as np
 from KNN import prep_data, get_k_nearest_neighbors, prep_data_list
 from databaseaccess import Dao
 
-
 class Model:
     """
     Class representing a Model

@@ -1,15 +1,13 @@
 """This is main"""
-import threading
+#import threading
 from flask import Flask, request, jsonify, render_template
-from databaseaccess import Dao, combine_key, split_key
-import matplotlib.pyplot as plt
-import numpy as np
 
-from io_link import Inductor
-#from stepper import Stepper, SEQ8
-from KNN import prep_data, get_k_nearest_neighbors
-from KNN_model import Model
+from databaseaccess import Dao, combine_key
 from plot_graphs import plot_2d
+from KNN_model import Model
+
+#from io_link import Inductor
+#from stepper import Stepper, SEQ8
 
 app = Flask(__name__)
 
@@ -17,28 +15,39 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    """Loading index page"""
     return render_template("index.html")
 
 @app.route("/admin")
 def admin():
+    """Loading admin page"""
     return render_template("admin.html")
 
 @app.route("/coins/load/currencies")
 def coins_load_currencies():
+    """Loading all trained currencies from database"""
     database = Dao("database.sqlite")
     return jsonify(database.get_currencies())
 
 @app.route("/coins/load/values")
 def coins_load_values():
+    """Loading all trained values for given currency from database"""
     database = Dao("database.sqlite")
 
     currency = request.args.get('currency', type = str)
     return jsonify(database.get_coinvalues(currency))
 
+@app.route("/scan")
+def scan():
+    """Scanning a coin"""
+    print("Scanne Münze")
+    return "2 Euro"
+
 ## ----- POST ----- ##
 
 @app.route("/coin/add", methods=["POST"])
 def coin_add():
+    """Scanning a new coin, add it to database and generate 2d plots of trainingdata"""
     database = Dao("database.sqlite")
 
     value = request.args.get('value', type = float)
@@ -54,9 +63,9 @@ def coin_add():
 
 @app.route("/train", methods=["POST"])
 def train():
+    """Training KNN model from all trainingdata in the database"""
     database = Dao("database.sqlite")
     try:
-
         model = Model("large", True)
         database.save_model(model.model)
 
@@ -69,6 +78,7 @@ def train():
 
 @app.route("/delete", methods=["DELETE"])
 def delete():
+    """Deleting all entries of that coin from all database tables"""
     database = Dao("database.sqlite")
 
     value = request.args.get('value', type = float)
@@ -82,10 +92,7 @@ def delete():
         return exception,400
 
 def measurement():
-    """
-    Starts stepper Motor and measurement.
-    Returns Array of all measurements.
-    """
+    """Starting stepper motor and measurement"""
 #    Sensor = Inductor()
 #    Motor = Stepper(SEQ8, 0.002)
 

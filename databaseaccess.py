@@ -135,7 +135,7 @@ class Dao:
         except Exception as exception:
             print(exception)
             return None
-    
+
     def get_coinvalues(self,currency):
         """
         This Method returns all values for the given currency"""
@@ -157,7 +157,6 @@ class Dao:
             self.conn.commit()
         except Exception as exception:
             print(exception)
-
 
 def combine_key(value,currency):
     """Combine value and currency"""

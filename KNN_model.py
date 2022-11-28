@@ -109,22 +109,22 @@ class Model:
         self.write_model()
 
 
-        def predict(self, measurement):
-            """
-            predict the measurement and returns the idx of the knn 
-            """
-            if len(measurement) != 4:
-                measurement = prep_data(measurement)
+    def predict(self, measurement):
+        """
+        predict the measurement and returns the idx of the knn
+        """
+        if len(measurement) != 4:
+            measurement = prep_data(measurement)
 
-            np_matrix = np.array(list(self.model.values()))
+        np_matrix = np.array(list(self.model.values()))
 
-            # remove the amount column which is only required to train the small model
-            if self.model_type == "small":
-                np_matrix = np.delete(np_model_small, 4, 1)
+        # remove the amount column which is only required to train the small model
+        if self.model_type == "small":
+            np_matrix = np.delete(np_model_small, 4, 1)
 
-            idx_knn = get_k_nearest_neighbors(measurement, np_matrix, 1)
+        idx_knn = get_k_nearest_neighbors(measurement, np_matrix, 1)
 
-            return idx_knn
+        return idx_knn
 
 
 if __name__ == "__main__":
@@ -140,8 +140,7 @@ if __name__ == "__main__":
     model_small = Model(model_type="small", name="small.json")
     model_large = Model(model_type="large", name="large.json")
 
-    model = model_large.create_small_model_from_training_data()
-    exit()
+    model_large.create_small_model_from_training_data()
 
     # model_small.update_small_model("200", (202, 155, 645, 170))
     # model_large.update_large_model("200", (202, 155, 645, 170))

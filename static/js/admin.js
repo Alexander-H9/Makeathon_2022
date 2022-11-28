@@ -1,6 +1,7 @@
 const value_inpt = document.querySelector("#value-inpt");
 const currency_inpt = document.querySelector("#currency-inpt");
 const add_btn = document.querySelector("#add-btn");
+const add_span = document.querySelector("#add-span");
 const train_btn = document.querySelector("#train-btn");
 const select_currency = document.querySelector("#select-currency");
 const select_value = document.querySelector("#select-value");
@@ -15,6 +16,7 @@ train_btn.addEventListener("click", async () => await trainAIModel());
 select_currency.addEventListener("click", currencySelected);
 select_value.addEventListener("click", valueSelected);
 delete_btn.addEventListener("click", async () => await deleteCoinFromServer());
+evaluate_btn.addEventListener("click", async () => await scanCoin());
 plot_img_2d.addEventListener("error", error2DImage);
 
 function currencySelected() {
@@ -32,6 +34,7 @@ function valueSelected() {
 }
 
 async function sendCoinToServer() {
+    add_span.textContent = "Scanning...";
     var value = value_inpt.value
     var currency = currency_inpt.value
     if (value && currency) {
@@ -40,9 +43,13 @@ async function sendCoinToServer() {
         });
         if (response.status == 200) {
             plot_img_2d.src = "./static/images/"+value+" "+currency+".png"
+            add_span.textContent = "Success";
         } else {
             console.log("failed to send Coin to Server");
+            add_span.textContent = "Error";
         }
+    } else {
+        add_span.textContent = "Enter currency and value";
     }
 }
 
@@ -66,6 +73,18 @@ async function deleteCoinFromServer() {
         console.log("failed to delete Coin from server");
     }
     await loadCurrenciesFromServer();
+}
+
+async function scanCoin() {
+    evaluate_span.textContent = "Scanning...";
+    let response = await fetch("/scan");
+    if (response.status == 200) {
+        res = await response.text();
+        evaluate_span.textContent = res;
+    } else {
+        evaluate_span.textContent = "Error"
+        console.log("failed to load currencies from server");
+    }
 }
 
 async function loadCurrenciesFromServer() {

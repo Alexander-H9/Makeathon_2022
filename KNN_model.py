@@ -2,6 +2,7 @@ import json
 import numpy as np
 from KNN import prep_data, get_k_nearest_neighbors, prep_data_list
 from databaseaccess import Dao
+# from main import measurement as mes
 
 class Model:
     """
@@ -130,6 +131,28 @@ class Model:
         return self.database.get_model_labels()[idx_knn[0]]
 
 
+    def evaluate(self, y):
+        """
+        evaluate the model and returns the accuracy
+        """
+
+        ITERATIONS = 10
+        true_prediction = 0
+        
+        for _ in range(ITERATIONS):
+
+            measurement = [12,23,34,45,56,67,678] # mes()
+            if len(measurement) != 4:
+                measurement = prep_data(measurement)
+
+            if self.predict(measurement) == y:
+                true_prediction += 1
+        
+        accuracy = round(true_prediction/ITERATIONS, 2)*100
+        return accuracy
+
+
+
 if __name__ == "__main__":
 
     messwerte = [210, 838, 985, 340, 864, 130, 719, 255, 782, 992,
@@ -152,6 +175,7 @@ if __name__ == "__main__":
 
     model_large.create_small_model_from_training_data()
     print(model_large.predict(messwerte))
+    print(model_large.evaluate("0.1 Euro"))
     exit()
 
     # model_small.update_small_model("200", (202, 155, 645, 170))

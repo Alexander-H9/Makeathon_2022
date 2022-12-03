@@ -65,7 +65,7 @@ def coin_add():
         data = measurement()
         database.save_training_data(value,currency,data)
         plot_2d(list(range(len(data))),data,combine_key(value, currency),"./static/images","png")
-        return ""
+        return {}
     except Exception as exception:
         print(exception)
         return exception,400
@@ -78,7 +78,7 @@ def train():
         model = Model("large", True)
         database.save_model(model.model)
         plot_4d(model.model,"4D Models","./static/images","png")
-        return ""
+        return {} 
     except Exception as exception:
         print(exception)
         return exception,400
@@ -95,7 +95,7 @@ def delete():
     try:
         database.delete_coin_model(value,currency)
         database.delete_coin_trainingdata(value,currency)
-        return ""
+        return {} 
     except Exception as exception:
         print(exception)
         return exception,400

@@ -1,21 +1,19 @@
 import json
 import numpy as np
-from databaseaccess import Dao
 # from main import measurement as mes
 
 class Model:
     """
     Class representing a Model
     """
-    def __init__(self, model_type, model_from_db=False, name="default"):
+    def __init__(self, model_type, model_from_db=None, name="default"):
         self.name: str = name
         self.model_type: str = model_type
-        self.database = Dao("database.sqlite")
         self.key_mapping = {0: "2€", 1: "1€", 2: "0.5€", 3: "0.20€",
                             4: "0.10", 5: "0.05€", 6: "0.02€", 7: "0.01€"}
 
         if model_from_db:
-            self.model = self.database.load_all_training_data()
+            self.model = model_from_db
             self.create_small_model_from_training_data()
         else:
             try:
@@ -108,7 +106,7 @@ class Model:
         self.write_model()
 
 
-    def predict(self, measurement):
+    def predict(self, measurement, model_labels):
         """
         predict the measurement and returns the idx of the knn
         """
@@ -123,14 +121,16 @@ class Model:
 
         idx_knn = get_k_nearest_neighbors(measurement, np_matrix, 1)
 
-        if len(self.database.get_model_labels()) < idx_knn[0]:
+        if len(model_labels) < idx_knn[0]:
             print("ERROR Max, da läuft irgend was nicht ganz rund in der Datenbank")
             exit()
 
-        return self.database.get_model_labels()[idx_knn[0]]
+        print("l:",model_labels,"id:",idx_knn[0])
+        print(self.model.values())
+        return model_labels[idx_knn[0]]
 
 
-    def evaluate(self, y):
+    def evaluate(self, y, model_labels):
         """
         evaluate the model and returns the accuracy
         """
@@ -140,11 +140,11 @@ class Model:
 
         for _ in range(ITERATIONS):
 
-            measurement = [12,23,34,45,56,67,678] # mes()
+            measurement = [12,23,34,45,56,67,678]
             if len(measurement) != 4:
                 measurement = prep_data(measurement)
 
-            if self.predict(measurement) == y:
+            if self.predict(measurement, model_labels) == y:
                 true_prediction += 1
 
         accuracy = round(true_prediction/ITERATIONS, 2)*100
@@ -184,7 +184,7 @@ def prep_data_list(data):
     return res
 
 
-def get_k_nearest_neighbors(data_vector,data_martrix,k=1):
+def get_k_nearest_neighbors(data_vector,data_matrix,k=1):
     """
     compute the k nearest neighbors for a query vector x given a data matrix X
     :param x: the query vector x
@@ -192,7 +192,7 @@ def get_k_nearest_neighbors(data_vector,data_martrix,k=1):
     :param k: number of nearest-neighbors to be returned
     :return: return list of k line indixes referring to the k nearest neighbors of x in X
     """
-    distances = [np.linalg.norm(data_martrix[i]-data_vector) for i in range(len(data_martrix))]
+    distances = [np.linalg.norm(data_matrix[i]-data_vector) for i in range(len(data_matrix))]
     return np.argsort(distances)[:k]
 
 
@@ -204,6 +204,9 @@ if __name__ == "__main__":
                 516, 51, 900, 806, 197, 485, 1000, 987, 573, 6,
                 758, 653, 386, 423, 398, 649, 34, 184, 519, 901,
                 952, 447, 319, 199, 714, 302, 235, 161, 767, 958]
+
+    labels = ['2 Euro', '1 Euro', '0.5 Euro', '0.2 Euro',
+            '0.1 Euro', '0.05 Euro', '0.02 Euro', '0.01 Euro']
 
     # old working models
     # model_small = Model("model_type="small", name="model_1.json")
@@ -218,8 +221,8 @@ if __name__ == "__main__":
     model_large = Model(model_type="large", name="large.json")
 
     model_large.create_small_model_from_training_data()
-    print(model_large.predict(messwerte))
-    print(model_large.evaluate("0.1 Euro"))
+    print(model_large.predict(messwerte, labels))
+    print(model_large.evaluate("0.1 Euro", labels))
     exit()
 
     # model_small.update_small_model("200", (202, 155, 645, 170))

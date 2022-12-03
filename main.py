@@ -1,13 +1,15 @@
 """This is main"""
 import threading
 from flask import Flask, request, jsonify, render_template
+from waitress import serve
 
 from databaseaccess import Dao, combine_key
 from plot_graphs import plot_2d,plot_4d
 from KNN_model import Model
 
-from io_link import Inductor
-from stepper import Stepper
+if not __debug__:
+    from io_link import Inductor
+    from stepper import Stepper
 
 app = Flask(__name__)
 
@@ -63,7 +65,7 @@ def coin_add():
         data = measurement()
         database.save_training_data(value,currency,data)
         plot_2d(list(range(len(data))),data,combine_key(value, currency),"./static/images","png")
-        return "" 
+        return ""
     except Exception as exception:
         print(exception)
         return exception,400
@@ -100,6 +102,9 @@ def delete():
 
 def measurement():
     """Starting stepper motor and measurement"""
+    if __debug__:
+        return [1,2,3,4,5]
+
     Sensor = Inductor()
     Motor = Stepper()
 
@@ -111,8 +116,14 @@ def measurement():
         val = Sensor.get_value()
         if val < 1000:
             data.append(val)
-
     return data   # Ungekürzte Messdaten
 
+
+
+
+
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    if __debug__:
+        app.run(debug=True, host="0.0.0.0")
+    else:
+        serve(app, host="0.0.0.0", port=80)

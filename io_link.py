@@ -1,103 +1,117 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-import requests
-import json
+"""Provides Classes to interact with Makeathon Hardware"""
 import time
+import json
+import requests
 
 IP = "169.254.99.1"
 
 class Sensor:
+    """Base class for all Sensors"""
     def __init__(self):
         pass
 
-    def getData(self, port):
+    def get_data(self, port):
+        """Reads Data from Device"""
         url = 'http://' + IP
-        portstr = "/iolinkmaster/port[{}]/iolinkdevice/pdin/getdata".format(port)
+        portstr = f"/iolinkmaster/port[{port}]/iolinkdevice/pdin/getdata"
         myobj = {"code":"request","cid":4711, "adr":portstr}
-        x = requests.post(url, json = myobj)
-        y = json.loads(x.text)
-        return y
+        response = requests.post(url, json = myobj, timeout=30)
+        return json.loads(response.text)["data"]
 
 class UltrasonicDistance(Sensor):
+    """Ultrasonic Distance Sensor"""
     def __init__(self):
         super().__init__()
         self.port = 1
 
     def get_value(self):
-        y = self.getData(self.port)
-        val = int(y["data"]["value"], 16)>>16
+        """Get sensor value from base class"""
+        data = self.get_data(self.port)
+        val = int(data["value"], 16)>>16
         return val*10/100.0
 
 class TemperatureProbe(Sensor):
+    """Temperature Probe Sensor"""
     def __init__(self):
         super().__init__()
         self.port = 2
 
     def get_value(self):
-        y = self.getData(self.port)
-        val = int(y["data"]["value"], 16)
+        """Get sensor value from base class"""
+        data = self.get_data(self.port)
+        val = int(data["value"], 16)
         return val*10/100.0
 
 class AngleMeasurement(Sensor):
+    """Angle Measurement Sensor"""
     def __init__(self):
         super().__init__()
         self.port = 3
 
     def get_value(self):
-        y = self.getData(self.port)
-        val = int(y["data"]["value"], 16)
+        """Get sensor value from base class"""
+        data = self.get_data(self.port)
+        val = int(data["value"], 16)
         return val
 
 class Capacitor(Sensor):
+    """Capacitor Sensor"""
     def __init__(self):
         super().__init__()
         self.port = 4
 
     def get_value(self):
-        y = self.getData(self.port)
-        val = int(y["data"]["value"], 16)
+        """Get sensor value from base class"""
+        data = self.get_data(self.port)
+        val = int(data["value"], 16)
         return val
 
 class LaserDistance(Sensor):
+    """Laser Distance Sensor"""
     def __init__(self):
         super().__init__()
         self.port = 5
 
     def get_value(self):
-        y = self.getData(self.port)
-        val = int(y["data"]["value"], 16) >> 4
+        """Get sensor value from base class"""
+        data = self.get_data(self.port)
+        val = int(data["value"], 16) >> 4
         return val
 
 class Inductor(Sensor):
+    """Induction Sensor"""
     def __init__(self):
         super().__init__()
         self.port = 7
 
     def get_value(self):
-        y = self.getData(self.port)
-        val = int(y["data"]["value"], 16)>>16
+        """Get sensor value from base class"""
+        data = self.get_data(self.port)
+        val = int(data["value"], 16)>>16
         return val
 
 class Socket:
+    """This Class provides all the needed Methods to interact with the Socket"""
     def __init__(self):
         self.port = 8
 
     def get_port(self):
+        """Get port"""
         url = 'http://' + IP
-        portstr = "/iolinkmaster/port[{}]/iolinkdevice/pdout/getdata".format(self.port)
+        portstr = f"/iolinkmaster/port[{self.port}]/iolinkdevice/pdout/getdata"
         myobj = {"code":"request","cid":4711, "adr":portstr}
-        x = requests.post(url, json = myobj)
+        x = requests.post(url, json = myobj, timeout=30)
         y = json.loads(x.text)
         val = int(y["data"]["value"])
         return val
 
     def set_port(self, val):
+        """Set port"""
         url = 'http://' + IP
-        portstr = "/iolinkmaster/port[{}]/iolinkdevice/pdout/setdata".format(self.port)
-        valstr = "{:02d}".format(val)
+        portstr = f"/iolinkmaster/port[{self.port}]/iolinkdevice/pdout/setdata"
+        valstr = f"{val:02d}"
         myobj = {"code":"request","cid":4712, "adr":portstr, "data":{"newvalue":valstr}}
-        requests.post(url, json = myobj)
+        requests.post(url, json = myobj, timeout=30)
         return val
 
 

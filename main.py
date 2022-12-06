@@ -12,7 +12,6 @@ if not __debug__:
     from stepper import Stepper
 
 app = Flask(__name__)
-database = Dao("database.sqlite")
 
 ## ----- GET ----- ##
 
@@ -29,24 +28,26 @@ def admin():
 @app.route("/load/currencies")
 def load_currencies():
     """Loading all trained currencies from database"""
+    database = Dao("database.sqlite")
     return jsonify(database.get_currencies())
 
 @app.route("/load/values")
 def load_values():
     """Loading all trained values for given currency from database"""
+    database = Dao("database.sqlite")
     currency = request.args.get('currency', type = str)
     return jsonify(database.get_coinvalues(currency))
 
 @app.route("/load/stats")
 def load_stats():
     """Loading amound of coins and currencies"""
-    
+    database = Dao("database.sqlite")
     return jsonify(database.get_stats())
 
 @app.route("/scan")
 def scan():
     """Scanning a coin"""
-    print("Scanne Münze")
+    database = Dao("database.sqlite")
     model = Model(model_type="large", model_from_db=database.load_all_training_data())
     return model.predict(measurement(), database.get_model_labels())
 
@@ -57,6 +58,7 @@ def coin_add():
     """Scanning a new coin, add it to database and generate 2d plots of trainingdata"""
     value = request.args.get('value', type = float)
     currency = request.args.get('currency', type = str)
+    database = Dao("database.sqlite")
     try:
         data = measurement()
         database.save_training_data(value,currency,data)
@@ -69,6 +71,7 @@ def coin_add():
 @app.route("/train", methods=["POST"])
 def train():
     """Training KNN model from all trainingdata in the database"""
+    database = Dao("database.sqlite")
     try:
         model = Model(model_type="large", model_from_db=database.load_all_training_data())
         database.save_model(model.model)
@@ -85,6 +88,7 @@ def delete():
     """Deleting all entries of that coin from all database tables"""
     value = request.args.get('value', type = float)
     currency = request.args.get('currency', type = str)
+    database = Dao("database.sqlite")
     try:
         database.delete_coin_model(value,currency)
         database.delete_coin_trainingdata(value,currency)
@@ -96,7 +100,7 @@ def delete():
 def measurement():
     """Starting stepper motor and measurement"""
     if __debug__:
-        return [1,2,3,4,5]
+        return [202,155,645,170]
 
     Sensor = Inductor()
     Motor = Stepper()
@@ -109,7 +113,7 @@ def measurement():
         val = Sensor.get_value()
         if val < 1000:
             data.append(val)
-    return data   # Ungekürzte Messdaten
+    return data
 
 if __name__ == "__main__":
     if __debug__:

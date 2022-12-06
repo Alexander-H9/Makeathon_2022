@@ -9,23 +9,23 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <title>Makeathon 2022</title>
 </head>
-<body>
+<body class="text-white">
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-lg-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand fs-3 fw-bold" href="#"><i class="fa-solid fa-piggy-bank mx-3"></i>Makeathon <span class="limegreen">2022</span></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto mb-2">
-                    <li class="nav-item mx-lg-2 mx-3">
-                        <a class="nav-link text-white fs-5" href="/">HOME</a>
+                <ul class="navbar-nav mx-auto my-2">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link fs-5" href="/">HOME</a>
                     </li>
-                    <li class="nav-item mx-lg-2 mx-3">
-                        <a class="nav-link text-white fs-5 active" href="#">ADMIN</a>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link fs-5 active" href="#">ADMIN</a>
                     </li>
                 </ul>
             </div>
@@ -39,12 +39,9 @@
 
             <!-- Sidebar-->
 
-            <div class="col-auto col-md-3 col-xl-3 px-sm-2 px-0 bg-dark">
-                <div class="d-flex flex-column align-items-center  px-3 pt-2 text-white min-vh-100">
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center">
-                        <!-- <li class="mb-2 mt-4">
-                            <span class="fs-4 fw-bold">OPTIONS</span>
-                        </li> -->
+            <div class="col-xl-2 bg-dark">
+                <div class="sticky-top flex-column min-vh-100">
+                    <ul class="nav flex-column align-items-center">
                         <li class="mb-2 mt-3">
                             <span class="fs-5 fw-bold">ADD COIN</span>
                         </li>

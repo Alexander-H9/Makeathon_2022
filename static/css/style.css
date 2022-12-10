@@ -82,3 +82,20 @@ body::-webkit-scrollbar {
 .opt-btn:hover {
     box-shadow: 0 0 40px 40px #32cd32 inset;
 }
+
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.h1-shadow {
+    text-shadow: 5px 5px #000000;
+}

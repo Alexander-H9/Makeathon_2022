@@ -125,8 +125,6 @@ class Model:
             print("ERROR Max, da läuft irgend was nicht ganz rund in der Datenbank")
             exit()
 
-        print("l:",model_labels,"id:",idx_knn[0])
-        print(self.model.values())
         return model_labels[idx_knn[0]]
 
 

@@ -3,7 +3,7 @@ import threading
 from flask import Flask, request, jsonify, render_template
 from waitress import serve
 
-from databaseaccess import Dao, combine_key
+from databaseaccess import Dao, combine_key, split_key
 from plot_graphs import plot_2d,plot_4d
 from KNN_model import Model
 
@@ -11,7 +11,10 @@ if not __debug__:
     from io_link import Inductor
     from stepper import Stepper
 
+BANKACCOUNT = dict()
+
 app = Flask(__name__)
+database = Dao("database.sqlite")
 
 ## ----- GET ----- ##
 
@@ -28,28 +31,38 @@ def admin():
 @app.route("/load/currencies")
 def load_currencies():
     """Loading all trained currencies from database"""
-    database = Dao("database.sqlite")
     return jsonify(database.get_currencies())
 
 @app.route("/load/values")
 def load_values():
     """Loading all trained values for given currency from database"""
-    database = Dao("database.sqlite")
     currency = request.args.get('currency', type = str)
     return jsonify(database.get_coinvalues(currency))
 
 @app.route("/load/stats")
 def load_stats():
-    """Loading amound of coins and currencies"""
-    database = Dao("database.sqlite")
+    """Loading amount of coins and currencies"""
     return jsonify(database.get_stats())
+
+@app.route("/load/bankaccount")
+def load_bankaccount():
+    """Loading bankaccount values and currencies"""
+    global BANKACCOUNT
+    return jsonify(BANKACCOUNT)
 
 @app.route("/scan")
 def scan():
     """Scanning a coin"""
-    database = Dao("database.sqlite")
     model = Model(model_type="large", model_from_db=database.load_all_training_data())
-    return model.predict(measurement(), database.get_model_labels())
+    result = model.predict(measurement(), database.get_model_labels())
+    value, currency = split_key(result)
+
+    global BANKACCOUNT
+    if currency in BANKACCOUNT:
+        BANKACCOUNT[currency] += float(value)
+    else:
+        BANKACCOUNT[currency] = float(value)
+    return result
 
 ## ----- POST ----- ##
 
@@ -58,7 +71,6 @@ def coin_add():
     """Scanning a new coin, add it to database and generate 2d plots of trainingdata"""
     value = request.args.get('value', type = float)
     currency = request.args.get('currency', type = str)
-    database = Dao("database.sqlite")
     try:
         data = measurement()
         database.save_training_data(value,currency,data)
@@ -71,7 +83,6 @@ def coin_add():
 @app.route("/train", methods=["POST"])
 def train():
     """Training KNN model from all trainingdata in the database"""
-    database = Dao("database.sqlite")
     try:
         model = Model(model_type="large", model_from_db=database.load_all_training_data())
         database.save_model(model.model)
@@ -88,7 +99,6 @@ def delete():
     """Deleting all entries of that coin from all database tables"""
     value = request.args.get('value', type = float)
     currency = request.args.get('currency', type = str)
-    database = Dao("database.sqlite")
     try:
         database.delete_coin_model(value,currency)
         database.delete_coin_trainingdata(value,currency)

@@ -1,4 +1,5 @@
 """Plotting graphs"""
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
@@ -47,4 +48,18 @@ def plot_4d(model,name,path,filetype):
     img = ax.scatter(x_list, y_list, z_list, c=c_list, cmap=plt.spring())
     fig.colorbar(img)
     plt.savefig(path+"/"+name+"."+filetype,dpi='figure')
+    plt.close()
+
+def plot_evaluation(accuracy_coins:dict):
+    """
+    Bar plot for the evaluation
+    """
+    values = accuracy_coins.values()
+    labels = accuracy_coins.keys()
+    y_pos = np.arange(len(labels))
+
+    plt.title("Evaluation")
+    plt.bar(y_pos, values)
+    plt.xticks(y_pos, labels)
+    plt.savefig("evaluation.jpg", dpi=600)
     plt.close()

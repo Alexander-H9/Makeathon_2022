@@ -1,6 +1,7 @@
 import json
 import numpy as np
-# from main import measurement as mes
+from main import measurement as mes
+from plot_graphs import plot_evaluation
 
 class Model:
     """
@@ -128,9 +129,10 @@ class Model:
         return model_labels[idx_knn[0]]
 
 
-    def evaluate(self, y, model_labels):
+    def evaluate_automatic(self, y, model_labels):
         """
         evaluate the model and returns the accuracy
+        this function requires a specific construction which can loop the coin
         """
 
         ITERATIONS = 10
@@ -138,7 +140,7 @@ class Model:
 
         for _ in range(ITERATIONS):
 
-            measurement = [12,23,34,45,56,67,678]
+            measurement = mes()
             if len(measurement) != 4:
                 measurement = prep_data(measurement)
 
@@ -147,6 +149,44 @@ class Model:
 
         accuracy = round(true_prediction/ITERATIONS, 2)*100
         return accuracy
+
+
+    def evaluate(self, labels:list):
+        """
+        evaluate the model and returns the accuracy
+        """
+        print(f'The following coins will be evaluated: {labels}\n')
+        accuracy_coins = {}
+        mean_accuracy_model = 0
+        for label in labels:
+            evaluate = True
+            iteration = 1
+            true_prediction = 0
+            while evaluate:
+                print("Evaluate {lable}")
+                measurement = mes()
+
+                if self.predict(measurement, labels) == label:
+                    true_prediction += 1
+                    print("Prediction was True")
+
+                else: print("Prediction was False")
+
+                keep_going = input('Do you want to continue to evaluate {label}?\nIt has evaluated {k} times\n yes or no ?')
+
+                if keep_going == "yes":
+                    k += 1
+                elif keep_going == "no":
+                    accuracy_coins[str(label)] = round(true_prediction/iteration, 2)*100
+                    mean_accuracy_model += accuracy_coins[str(label)]
+                    evaluate = False
+                else:
+                    print("Invalid user input, please confirm only with yes or no")
+
+        mean_accuracy_model = round(mean_accuracy_model/len(labels), 2)*100
+        accuracy_coins["mean_accuracy_model"] = mean_accuracy_model
+
+        return accuracy_coins
 
 
 def prep_data(data):
@@ -219,8 +259,9 @@ if __name__ == "__main__":
     model_large = Model(model_type="large", name="large.json")
 
     model_large.create_small_model_from_training_data()
-    print(model_large.predict(messwerte, labels))
-    print(model_large.evaluate("0.1 Euro", labels))
+    # print(model_large.predict(messwerte, labels))
+    accuracy = model_large.evaluate(labels)
+    plot_evaluation(accuracy)
     exit()
 
     # model_small.update_small_model("200", (202, 155, 645, 170))

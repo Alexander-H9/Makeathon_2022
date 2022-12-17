@@ -1,7 +1,8 @@
 """This is main"""
 import threading
 from flask import Flask, request, jsonify, render_template
-from waitress import serve
+from measurement import measurement
+#from waitress import serve
 
 from databaseaccess import Dao, combine_key, split_key
 from plot_graphs import plot_2d,plot_4d, plot_evaluation
@@ -69,6 +70,7 @@ def eval():
     model = Model(model_type="large", model_from_db=database.load_all_training_data())
     accuracy = model.evaluate(database.get_model_labels())
     plot_evaluation(accuracy)
+    return {} 
 
 ## ----- POST ----- ##
 
@@ -113,26 +115,8 @@ def delete():
         print(exception)
         return exception,400
 
-def measurement():
-    """Starting stepper motor and measurement"""
-    if __debug__:
-        return [202,155,645,170]
-
-    Sensor = Inductor()
-    Motor = Stepper()
-
-    thread_motor = threading.Thread(target=Motor.run, args=(180, -1))
-    thread_motor.start()
-
-    data = []
-    while thread_motor.is_alive():
-        val = Sensor.get_value()
-        if val < 1000:
-            data.append(val)
-    return data
-
 if __name__ == "__main__":
     if __debug__:
         app.run(debug=True, host="0.0.0.0")
-    else:
-        serve(app, host="0.0.0.0", port=80)
+    # else:
+    #     serve(app, host="0.0.0.0", port=80)

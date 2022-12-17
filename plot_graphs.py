@@ -58,8 +58,13 @@ def plot_evaluation(accuracy_coins:dict):
     labels = accuracy_coins.keys()
     y_pos = np.arange(len(labels))
 
+    ax = plt.axes()
+
     plt.title("Evaluation")
     plt.bar(y_pos, values)
     plt.xticks(y_pos, labels)
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
+    ax.figure
+    plt.subplots_adjust(bottom=0.15)
     plt.savefig("evaluation.jpg", dpi=600)
     plt.close()

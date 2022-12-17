@@ -1,6 +1,6 @@
 import json
 import numpy as np
-from main import measurement as mes
+from measurement import measurement as mes
 from plot_graphs import plot_evaluation
 
 class Model:
@@ -158,12 +158,13 @@ class Model:
         print(f'The following coins will be evaluated: {labels}\n')
         accuracy_coins = {}
         mean_accuracy_model = 0
+
         for label in labels:
             evaluate = True
             iteration = 1
             true_prediction = 0
             while evaluate:
-                print("Evaluate {lable}")
+                print(f'\nEvaluate {label}')
                 measurement = mes()
 
                 if self.predict(measurement, labels) == label:
@@ -172,19 +173,23 @@ class Model:
 
                 else: print("Prediction was False")
 
-                keep_going = input('Do you want to continue to evaluate {label}?\nIt has evaluated {k} times\n yes or no ?')
+                keep_going = input(f'Do you want to continue to evaluate {label}?\nIt has evaluated {iteration} times\nyes or no ?\n')
 
                 if keep_going == "yes":
-                    k += 1
+                    iteration += 1
                 elif keep_going == "no":
                     accuracy_coins[str(label)] = round(true_prediction/iteration, 2)*100
                     mean_accuracy_model += accuracy_coins[str(label)]
+                    print("current acc: ", accuracy_coins)
+                    print("current model sum acc: ", mean_accuracy_model)
                     evaluate = False
                 else:
                     print("Invalid user input, please confirm only with yes or no")
+                    exit()
 
-        mean_accuracy_model = round(mean_accuracy_model/len(labels), 2)*100
-        accuracy_coins["mean_accuracy_model"] = mean_accuracy_model
+        mean_accuracy_model = round((mean_accuracy_model/len(labels)), 2)
+        print("mean_accuracy_model: ", mean_accuracy_model)
+        accuracy_coins["model"] = mean_accuracy_model
 
         return accuracy_coins
 

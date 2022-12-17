@@ -2,7 +2,7 @@
 import threading
 from flask import Flask, request, jsonify, render_template
 from measurement import measurement
-#from waitress import serve
+from waitress import serve
 
 from databaseaccess import Dao, combine_key, split_key
 from plot_graphs import plot_2d,plot_4d, plot_evaluation
@@ -118,5 +118,5 @@ def delete():
 if __name__ == "__main__":
     if __debug__:
         app.run(debug=True, host="0.0.0.0")
-    # else:
-    #     serve(app, host="0.0.0.0", port=80)
+    else:
+        serve(app, host="0.0.0.0", port=80)

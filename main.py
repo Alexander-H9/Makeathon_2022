@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify, render_template
 from waitress import serve
 
 from databaseaccess import Dao, combine_key, split_key
-from plot_graphs import plot_2d,plot_4d
+from plot_graphs import plot_2d,plot_4d, plot_evaluation
 from KNN_model import Model
 
 if not __debug__:
@@ -63,6 +63,12 @@ def scan():
     else:
         BANKACCOUNT[currency] = float(value)
     return result
+
+@app.route("/evaluate")
+def eval():
+    model = Model(model_type="large", model_from_db=database.load_all_training_data())
+    accuracy = model.evaluate(database.get_model_labels())
+    plot_evaluation(accuracy)
 
 ## ----- POST ----- ##
 
